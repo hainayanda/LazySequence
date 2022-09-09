@@ -1,0 +1,7 @@
+use_frameworks!
+target 'LazySequence_Tests' do
+  pod 'LazySequence', :path => '../'
+  
+  pod 'Quick', '~> 5.0.1'
+  pod 'Nimble', '~> 10.0.0'
+end

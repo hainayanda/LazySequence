@@ -1,0 +1,6 @@
+framework module LazySequence {
+  umbrella header "LazySequence-umbrella.h"
+
+  export *
+  module * { export * }
+}
