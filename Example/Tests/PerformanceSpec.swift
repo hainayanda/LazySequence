@@ -23,7 +23,7 @@ class PerformanceSpec: QuickSpec {
                 let result = mapped + filtered
                 result.forEach { print($0) }
             } and: {
-                let sorted = array.sortedSequence { $0.id.uuid.0 > $1.id.uuid.0 }
+                let sorted = array.lazy.sortedSequence { $0.id.uuid.0 > $1.id.uuid.0 }
                 let mapped = sorted.mapped { DummyEquatable(id: $0.id) }
                 let filtered = mapped.filtered { $0.id.uuid.0 % 2 == 0 }
                 let result = mapped.combined(with: filtered)

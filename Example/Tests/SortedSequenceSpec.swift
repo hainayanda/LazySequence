@@ -17,7 +17,7 @@ class SortedSequenceSpec: QuickSpec {
         it("should sort sequence") {
             let array = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].shuffled()
             var count: Int = 0
-            array.sortedSequence().enumerated().forEach { index, element in
+            array.lazy.sortedSequence().enumerated().forEach { index, element in
                 count += 1
                 expect(element).to(equal(index))
             }

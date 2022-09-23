@@ -18,28 +18,28 @@ class IntersectionSequenceSpec: QuickSpec {
             let left: [Dummy] = .dummies(count: Int.random(in: 20..<50))
             let expected: [Dummy] = Array(left[0..<15])
             let right: [Dummy] = expected + [Dummy].dummies(count: Int.random(in: 10 ..< 20))
-            let intersection = left.intersection(with: right) { $0.id }
+            let intersection = left.lazy.intersection(with: right) { $0.id }
             expect(intersection.compactMap { $0.id }).to(equal(expected.compactMap { $0.id }))
         }
         it("should intersect equatables") {
             let left: [DummyEquatable] = .dummies(count: Int.random(in: 20..<50))
             let expected: [DummyEquatable] = Array(left[0..<15])
             let right: [DummyEquatable] = expected + [DummyEquatable].dummies(count: Int.random(in: 10 ..< 20))
-            let intersection = left.intersection(with: right)
+            let intersection = left.lazy.intersection(with: right)
             expect(intersection).to(equal(expected))
         }
         it("should intersect hashables") {
             let left: [DummyHashable] = .dummies(count: Int.random(in: 20..<50))
             let expected: [DummyHashable] = Array(left[0..<15])
             let right: [DummyHashable] = expected + [DummyHashable].dummies(count: Int.random(in: 10 ..< 20))
-            let intersection = left.intersection(with: right)
+            let intersection = left.lazy.intersection(with: right)
             expect(intersection).to(equal(expected))
         }
         it("should intersect objects") {
             let left: [DummyObject] = .dummies(count: Int.random(in: 20..<50))
             let expected: [DummyObject] = Array(left[0..<15])
             let right: [DummyObject] = expected + [DummyObject].dummies(count: Int.random(in: 10 ..< 20))
-            let intersection = left.objectsIntersection(with: right)
+            let intersection = left.lazy.objectsIntersection(with: right)
             expect(intersection.compactMap { $0.id }).to(equal(expected.compactMap { $0.id }))
         }
     }

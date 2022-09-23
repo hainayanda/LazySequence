@@ -17,7 +17,7 @@ class PosixedSequenceSpec: QuickSpec {
         it("should drop first count of sequnce") {
             let array: [DummyEquatable] = .dummies(count: Int.random(in: 20..<50))
             var count: Int = 0
-            array.droppedFirst(10).enumerated().forEach { index, element in
+            array.lazy.droppedFirst(10).enumerated().forEach { index, element in
                 count += 1
                 expect(element).to(equal(array[index + 10]))
             }
@@ -28,7 +28,7 @@ class PosixedSequenceSpec: QuickSpec {
             let indexOfElementToBeFound = Int.random(in: 10..<20)
             let elementToBeFound = array[indexOfElementToBeFound]
             var count: Int = 0
-            array.droppedUntil(found: elementToBeFound).enumerated().forEach { index, element in
+            array.lazy.droppedUntil(found: elementToBeFound).enumerated().forEach { index, element in
                 count += 1
                 expect(element).to(equal(array[index + indexOfElementToBeFound]))
             }
@@ -38,7 +38,7 @@ class PosixedSequenceSpec: QuickSpec {
             let array: [DummyEquatable] = .dummies(count: Int.random(in: 20..<50))
             let elementToBeFound = DummyEquatable()
             var count: Int = 0
-            array.droppedUntil(found: elementToBeFound).forEach { _ in
+            array.lazy.droppedUntil(found: elementToBeFound).forEach { _ in
                 count += 1
             }
             expect(count).to(equal(0))
@@ -64,7 +64,7 @@ fileprivate func comparePosixWithArraySlice() -> TimeIntervalComparison {
             expect(element).to(equal(array[index + 875]))
         }
     } and: {
-        let sliced1 = array.droppedFirst(500)
+        let sliced1 = array.lazy.droppedFirst(500)
         let sliced2 = sliced1.droppedFirst(250)
         let result = sliced2.droppedFirst(125)
         result.enumerated().forEach { index, element in

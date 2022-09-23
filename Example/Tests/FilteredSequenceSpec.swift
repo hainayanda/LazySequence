@@ -18,7 +18,7 @@ class FilteredSequenceSpec: QuickSpec {
             let source: [DummyEquatable?] = .dummies(count: Int.random(in: 10..<50))
             let expected = source.filter { $0 != nil }
             var count = 0
-            source.filtered { $0 != nil }.enumerated().forEach { index, id in
+            source.lazy.filtered { $0 != nil }.enumerated().forEach { index, id in
                 expect(id).to(equal(expected[index]))
                 count += 1
             }
@@ -49,7 +49,7 @@ fileprivate func compareAvgFilterAndFilteredTimeInterval() -> TimeIntervalCompar
             expect($0.id.uuid.3 % 3 == 0).to(beTrue())
         }
     } and: {
-        let filtered0 = array.filtered { $0.id.uuid.0 % 9 == 0 }
+        let filtered0 = array.lazy.filtered { $0.id.uuid.0 % 9 == 0 }
         let filtered1 = filtered0.filtered { $0.id.uuid.1 % 7 == 0 }
         let filtered2 = filtered1.filtered { $0.id.uuid.2 % 5 == 0 }
         let filtered3 = filtered2.filtered { $0.id.uuid.3 % 3 == 0 }

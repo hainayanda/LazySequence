@@ -17,13 +17,13 @@ class MappedSequenceSpec: QuickSpec {
         it("should compactMapped iteration") {
             let source: [DummyEquatable?] = .dummies(count: Int.random(in: 10..<50))
             let expected = source.compactMap { $0 }
-            expect(source.compactArray).to(equal(expected))
+            expect(source.lazy.compactArray).to(equal(expected))
         }
         it("should mapped iteration") {
             let source: [DummyEquatable] = .dummies(count: Int.random(in: 10..<50))
             let expected = source.map { $0.id }
             var count = 0
-            source.mapped { $0.id }.enumerated().forEach { index, id in
+            source.lazy.mapped { $0.id }.enumerated().forEach { index, id in
                 expect(id).to(equal(expected[index]))
                 count += 1
             }
@@ -59,7 +59,7 @@ fileprivate func compareAvgMapAndMappedTimeInterval() -> TimeIntervalComparison 
             expect(element).to(equal(array[index]))
         }
     } and: {
-        let mapped1 = array.mapped { $0.id }
+        let mapped1 = array.lazy.mapped { $0.id }
         let mapped2 = mapped1.mapped { DummyObject(id: $0) }
         let mapped3 = mapped2.mapped { $0.id }
         let result = mapped3.mapped { DummyEquatable(id: $0) }
@@ -83,7 +83,7 @@ fileprivate func compareAvgCompactMapAndCompactMappedTimeInterval() -> TimeInter
             expect($0.id.uuid.3 % 9 == 0).to(beTrue())
         }
     } and: {
-        let mapped1 = array.compactMapped { $0.id.uuid.0 % 3 == 0 ? $0.id : nil }
+        let mapped1 = array.lazy.compactMapped { $0.id.uuid.0 % 3 == 0 ? $0.id : nil }
         let mapped2 = mapped1.compactMapped { $0.uuid.1 % 5 == 0 ? DummyObject(id: $0) : nil }
         let mapped3 = mapped2.compactMapped { $0.id.uuid.2 % 7 == 0 ? $0.id : nil }
         let result = mapped3.compactMapped { $0.uuid.3 % 9 == 0 ? DummyEquatable(id: $0) : nil }
