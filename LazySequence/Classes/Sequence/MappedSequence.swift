@@ -58,13 +58,13 @@ public extension LazySequence {
     }
 }
 
-public extension LazySequence where Element: OptionalElement {
+public extension LazySequence where Element: Unwrappable {
     
     /// Simply just shortcut to `compactMapped { $0 }`
     /// - Complexity: Executing this code will have complexity of O(1). Iterating it will have complexity of O(*n*) where *n* is the original sequence iteration count.
     /// - Returns: LazySequence that will ignore nil during its iterator iteration
     @inlinable func compacted() -> LazySequence<Element.Wrapped> {
-        self.compactMapped { try $0.unwrapped() }
+        self.compactMapped { $0.unwrapped() }
     }
     
     /// Simply just shortcut to to `compacted().asArray`
@@ -73,21 +73,16 @@ public extension LazySequence where Element: OptionalElement {
     }
 }
 
-// MARK: OptionalElement
+// MARK: Unwrappable
 
-public protocol OptionalElement {
+public protocol Unwrappable {
     associatedtype Wrapped
     
-    func unwrapped() throws -> Wrapped
+    func unwrapped() -> Wrapped?
 }
 
-extension Optional: OptionalElement {
-    public func unwrapped() throws -> Wrapped {
-        guard let value = self else {
-            throw LazySequenceError.failToUnwrappingOptional(type: Self.self)
-        }
-        return value
-    }
+extension Optional: Unwrappable {
+    public func unwrapped() -> Wrapped? { self }
 }
 
 // MARK: MappedSequenceIterator
