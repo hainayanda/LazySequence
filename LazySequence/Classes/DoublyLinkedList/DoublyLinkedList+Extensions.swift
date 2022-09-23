@@ -39,11 +39,11 @@ extension DoublyLinkedList: Collection {
         }
     }
     
-    public func index(after index: Int) -> Int { index + 1 }
+    @inlinable public func index(after index: Int) -> Int { index + 1 }
     
-    public var startIndex: Int { 0 }
+    @inlinable public var startIndex: Int { 0 }
     
-    public var endIndex: Int { count }
+    @inlinable public var endIndex: Int { count }
 }
 
 // MARK: DoublyLinkedList + ExpressibleByArrayLiteral
@@ -51,7 +51,7 @@ extension DoublyLinkedList: Collection {
 extension DoublyLinkedList: ExpressibleByArrayLiteral {
     public typealias ArrayLiteralElement = Element
     
-    public convenience init(arrayLiteral elements: Element...) {
+    @inlinable public convenience init(arrayLiteral elements: Element...) {
         self.init(elements)
     }
 }

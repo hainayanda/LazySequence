@@ -10,7 +10,7 @@ import Foundation
 public extension LazySequence {
     
     /// Simply just a shortcut to `Array(self)`
-    var asArray: [Element] { Array(self) }
+    @inlinable var asArray: [Element] { Array(self) }
     
     /// Create a sequence wrapper that will only iterate elements symetric difference between two sequence
     /// Since it will only check symetric difference elements when in iteration, the time complexity for the creation of this sequence is O(1)
