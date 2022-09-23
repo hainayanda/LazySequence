@@ -11,28 +11,6 @@ import Foundation
 
 public extension LazySequence {
     
-    /// Simply just shortcut to `uniqued(projection).asArray`
-    /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
-    /// If you just need to iterate the element uniquely, consider using `uniqued` instead
-    /// ```
-    /// // this will have time complexity O(2n)
-    /// // O(n) when in uniqueArray and another O(n) when do forEach operation
-    /// myArray.lazy.uniqueArray { projecting($0) }.forEach {
-    ///     print($0)
-    /// }
-    ///
-    /// // this will have time complexity O(n) since the filtering will be executed while iterating forEach
-    /// myArray.lazy.uniqued { projecting($0) }.forEach {
-    ///     print($0)
-    /// }
-    /// ```
-    /// - Complexity: O(*n*) on average, where *n* is the original sequence iterator iteration count
-    /// - Parameter projection: A closure that accepts an element of this sequence as its argument and returns an hashable value.
-    /// - Returns: New Array with unique element coming from the original sequence with its order
-    @inlinable func uniqueArray<Projection: Hashable>(byProjection projection: @escaping (Element) -> Projection) -> [Element] {
-        uniqued(byProjection: projection).asArray
-    }
-    
     /// Create a sequence wrapper that will filter out repeating elements during iterator iteration.
     /// Since it will only filtering when in iteration, the time complexity for the creation of this sequence is O(1).
     /// Filtering duplicates will be using a hash, so on average time complexity for iterating this sequence will be around O(n) or on worst case will be O(log n)
@@ -41,28 +19,6 @@ public extension LazySequence {
     /// - Returns: LazySequence that will filtering out repeating elements during its iterator iteration
     @inlinable func uniqued<Projection: Hashable>(byProjection projection: @escaping (Element) -> Projection) -> LazySequence<Element> {
         LazySequence(iterator: UniqueProjectionSequenceIterator(sequence: self, projection: projection))
-    }
-    
-    /// Simply just shortcut to `uniquedWhere(consideredSame).asArray`
-    /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
-    /// If you just need to iterate the element uniquely, consider using `uniqued` instead
-    /// ```
-    /// // this will have time complexity O(n^2 + n)
-    /// // O(n^2) when in uniqueArray and another O(n) when do forEach operation
-    /// myArray.lazy.uniqueArray { $0.id == $0.id }.forEach {
-    ///     print($0)
-    /// }
-    ///
-    /// // this will have time complexity O(n^2) since the filtering will be executed while iterating forEach
-    /// myArray.lazy.uniquedWhere { $0.id == $0.id }.forEach {
-    ///     print($0)
-    /// }
-    /// ```
-    /// - Complexity: O(*n*^2) on average, where *n* is the original sequence iterator iteration count
-    /// - Parameter consideredSame: A Closure that takes two elements as arguments and Bool as return value. If its return `True`, then the element will be considered the same, otherwise its not.
-    /// - Returns: LazySequence that will filtering out repeating elements during its iterator iteration
-    @inlinable func uniqueArray(where consideredSame: @escaping (Element, Element) -> Bool) -> [Element] {
-        uniqued(where: consideredSame).asArray
     }
     
     /// Create a sequence wrapper that will filter out repeating elements during iterator iteration.
@@ -84,26 +40,6 @@ public extension LazySequence {
 
 public extension LazySequence where Element: Equatable {
     
-    /// Simply just shortcut to `uniqued.asArray`
-    /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
-    /// If you just need to iterate the element uniquely, consider using `uniqued` instead
-    /// ```
-    /// // this will have time complexity O(n^2 + n)
-    /// // O(n^2) when in uniquedArray and another O(n) when do forEach operation
-    /// myArray.lazy.uniquedArray.forEach {
-    ///     print($0)
-    /// }
-    ///
-    /// // this will have time complexity O(n^2) since the filtering will be executed while iterating forEach
-    /// myArray.lazy.uniqued.forEach {
-    ///     print($0)
-    /// }
-    /// ```
-    /// - Complexity: O(*n*^2) on average, where *n* is the original sequence iterator iteration count
-    @inlinable var uniqueArray: [Element] {
-        uniqueArray(where: ==)
-    }
-    
     /// Create a sequence wrapper that will filter out repeating elements during iterator iteration.
     /// Since it will only filtering when in iteration, the time complexity for the creation of this sequence is O(1).
     /// - Complexity: Executing this code will have complexity of O(1). Iterating it will have complexity of O(*n*^2) on average where *n* is the original sequence iterator iteration count
@@ -115,26 +51,6 @@ public extension LazySequence where Element: Equatable {
 // MARK: Hashable LazySequence + Extensions
 
 public extension LazySequence where Element: Hashable {
-    
-    /// Simply just shortcut to `uniqued.asArray`
-    /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
-    /// If you just need to iterate the element uniquely, consider using `uniqued` instead
-    /// ```
-    /// // this will have time complexity O(2n)
-    /// // O(n) when in uniquedArray and another O(n) when do forEach operation
-    /// myArray.lazy.uniquedArray.forEach {
-    ///     print($0)
-    /// }
-    ///
-    /// // this will have time complexity O(n) since the filtering will be executed while iterating forEach
-    /// myArray.lazy.uniqued.forEach {
-    ///     print($0)
-    /// }
-    /// ```
-    /// - Complexity: O(*n*) on average, where *n* is the original sequence iterator iteration count
-    @inlinable var uniqueArray: [Element] {
-        uniqued.asArray
-    }
     
     /// Create a sequence wrapper that will filter out repeating elements during iterator iteration.
     /// Since it will only filtering when in iteration, the time complexity for the creation of this sequence is O(1).
@@ -148,26 +64,6 @@ public extension LazySequence where Element: Hashable {
 // MARK: AnyObject LazySequence + Extensions
 
 public extension LazySequence where Element: AnyObject {
-    
-    /// Simply just shortcut to `uniquedObjects.asArray`
-    /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
-    /// If you just need to iterate the element uniquely, consider using `uniquedObjects` instead
-    /// ```
-    /// // this will have time complexity O(2n)
-    /// // O(n) when in uniquedObjectsArray and another O(n) when do forEach operation
-    /// myArray.lazy.uniquedObjectsArray.forEach {
-    ///     print($0)
-    /// }
-    ///
-    /// // this will have time complexity O(n) since the filtering will be executed while iterating forEach
-    /// myArray.lazy.uniquedObjects.forEach {
-    ///     print($0)
-    /// }
-    /// ```
-    /// - Complexity: O(*n*) on average, where *n* is the original sequence iterator iteration count
-    @inlinable var uniqueObjectsArray: [Element] {
-        uniquedObjects.asArray
-    }
     
     /// Create a sequence wrapper that will filter out repeating elements during iterator iteration.
     /// Since it will only filtering when in iteration, the time complexity for the creation of this sequence is O(1).

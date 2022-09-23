@@ -20,7 +20,7 @@ class LazySequenceExtensionsSpec: QuickSpec {
             let rightSubstracted: [Dummy] = .dummies(count: Int.random(in: 10 ..< 20))
             let expected: [Dummy] = leftSubstracted + rightSubstracted
             let right: [Dummy] = Array(left[15..<left.count]) + rightSubstracted
-            let symetricDifference = left.lazy.symetricDifferencedArray(from: right) { $0.id }
+            let symetricDifference = left.symetricDifference(from: right) { $0.id }
             expect(symetricDifference.compactMap { $0.id }).to(equal(expected.compactMap { $0.id }))
         }
         it("should generate symetric differrence equatables") {
@@ -29,7 +29,7 @@ class LazySequenceExtensionsSpec: QuickSpec {
             let rightSubstracted: [DummyEquatable] = .dummies(count: Int.random(in: 10 ..< 20))
             let expected: [DummyEquatable] = leftSubstracted + rightSubstracted
             let right: [DummyEquatable] = Array(left[15..<left.count]) + rightSubstracted
-            let symetricDifference = left.lazy.symetricDifferencedArray(from: right)
+            let symetricDifference = left.symetricDifference(from: right)
             expect(symetricDifference).to(equal(expected))
         }
         it("should generate symetric differrence hashables") {
@@ -38,7 +38,7 @@ class LazySequenceExtensionsSpec: QuickSpec {
             let rightSubstracted: [DummyHashable] = .dummies(count: Int.random(in: 10 ..< 20))
             let expected: [DummyHashable] = leftSubstracted + rightSubstracted
             let right: [DummyHashable] = Array(left[15..<left.count]) + rightSubstracted
-            let symetricDifference = left.lazy.symetricDifferencedArray(from: right)
+            let symetricDifference = left.symetricDifference(from: right)
             expect(symetricDifference).to(equal(expected))
         }
         it("should generate symetric differrence objects") {
@@ -47,7 +47,7 @@ class LazySequenceExtensionsSpec: QuickSpec {
             let rightSubstracted: [DummyObject] = .dummies(count: Int.random(in: 10 ..< 20))
             let expected: [DummyObject] = leftSubstracted + rightSubstracted
             let right: [DummyObject] = Array(left[15..<left.count]) + rightSubstracted
-            let symetricDifference = left.lazy.objectsSymetricDifferenceArray(from: right)
+            let symetricDifference = left.objectsSymetricDifference(from: right)
             expect(symetricDifference.compactMap { $0.id }).to(equal(expected.compactMap { $0.id }))
         }
     }

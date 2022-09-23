@@ -11,32 +11,6 @@ import Foundation
 
 public extension LazySequence {
     
-    /// Simply just shortcut to `substracted(by: otherSequence, projection).asArray`
-    /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
-    /// If you just need to iterate the element uniquely, consider using `substracted` instead
-    /// ```
-    /// // this will have time complexity O(k + l + m) where k is myArray length, l is otherArray length and m is intersection array length
-    /// myArray.lazy.substractToArray(by: otherArray) { projecting($0) }.forEach {
-    ///     print($0)
-    /// }
-    ///
-    /// // this will have time complexity O(k + l) since the intersection check will be executed while iterating forEach
-    /// myArray.lazy.substracted(by: otherArray) { projecting($0) }.forEach {
-    ///     print($0)
-    /// }
-    /// ```
-    /// - Complexity: O(*n* + *m*) on average, where *n* is the original sequence iterator iteration count, and *m* is the substracting sequence iterator iteration count
-    /// - Parameters:
-    ///   - otherSequence: A sequence to substract this sequence
-    ///   - projection: A closure that accepts an element of this sequence as its argument and returns an hashable value.
-    /// - Returns: Array of element from this sequence substracted by given sequence
-    @inlinable func substractToArray<S: Sequence, Projection: Hashable>(
-        by otherSequence: S,
-        usingProjection projection: @escaping (Element) -> Projection) -> [Element]
-    where S.Element == Element {
-        substracted(by: otherSequence, usingProjection: projection).asArray
-    }
-    
     /// Create a sequence wrapper that will only iterate elements substracted between two sequence
     /// Since it will only check substracted elements when in iteration, the time complexity for the creation of this sequence is O(1)
     /// - Complexity: Executing this code will have complexity of O(1). Iterating it will have average complexity of O(*n* + *m*) where *n* is the original sequence iterator iteration count, and *m* is the substracting sequence iterator iteration count
@@ -55,29 +29,6 @@ public extension LazySequence {
                 projection: projection
             )
         )
-    }
-    
-    /// Simply just shortcut to `substracted(by: otherSequence).asArray`
-    /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
-    /// If you just need to iterate the element uniquely, consider using `substracted` instead
-    /// ```
-    /// // this will have time complexity O(k + l + m) where k is myArray length, l is otherArray length and m is intersection array length
-    /// myArray.lazy.substractToArray(by: otherArray).forEach {
-    ///     print($0)
-    /// }
-    ///
-    /// // this will have time complexity O(k + l) since the intersection check will be executed while iterating forEach
-    /// myArray.lazy.substracted(by: otherArray).forEach {
-    ///     print($0)
-    /// }
-    /// ```
-    /// - Complexity: O(*n* *m*) on average, where *n* is the original sequence iterator iteration count, and *m* is the substracting sequence iterator iteration count
-    /// - Parameter otherSequence: A sequence to substract this sequence
-    /// - Parameter consideredSame: A Closure that takes two elements as arguments and Bool as return value. If its return `True`, then the element will be considered the same, otherwise its not.
-    /// - Returns: Array of element from this sequence substracted by given sequence
-    @inlinable func substractToArray<S: Sequence>(by otherSequence: S, where consideredSame: @escaping (Element, Element) -> Bool) -> [Element]
-    where S.Element == Element {
-        substracted(by: otherSequence, where: consideredSame).asArray
     }
     
     /// Create a sequence wrapper that will only iterate elements substracted between two sequence
@@ -102,28 +53,6 @@ public extension LazySequence {
 
 public extension LazySequence where Element: Equatable {
     
-    /// Simply just shortcut to `substracted(by: otherSequence).asArray`
-    /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
-    /// If you just need to iterate the element uniquely, consider using `substracted` instead
-    /// ```
-    /// // this will have time complexity O(k + l + m) where k is myArray length, l is otherArray length and m is intersection array length
-    /// myArray.lazy.substractToArray(by: otherArray).forEach {
-    ///     print($0)
-    /// }
-    ///
-    /// // this will have time complexity O(k + l) since the intersection check will be executed while iterating forEach
-    /// myArray.lazy.substracted(by: otherArray).forEach {
-    ///     print($0)
-    /// }
-    /// ```
-    /// - Complexity: O(*n* *m*) on average, where *n* is the original sequence iterator iteration count, and *m* is the substracting sequence iterator iteration count
-    /// - Parameter otherSequence: A sequence to substract this sequence
-    /// - Returns: Array of element from this sequence substracted by given sequence
-    @inlinable func substractToArray<S: Sequence>(by otherSequence: S) -> [Element]
-    where S.Element == Element {
-        substractToArray(by: otherSequence, where: ==)
-    }
-    
     /// Create a sequence wrapper that will only iterate elements substracted between two sequence
     /// Since it will only check substracted elements when in iteration, the time complexity for the creation of this sequence is O(1)
     /// - Complexity: Executing this code will have complexity of O(1). Iterating it will have average complexity of O(*n* *m*) where *n* is the original sequence iterator iteration count, and *m* is the substracting sequence iterator iteration count
@@ -139,28 +68,6 @@ public extension LazySequence where Element: Equatable {
 
 public extension LazySequence where Element: Hashable {
     
-    /// Simply just shortcut to `substracted(by: otherSequence).asArray`
-    /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
-    /// If you just need to iterate the element uniquely, consider using `substracted` instead
-    /// ```
-    /// // this will have time complexity O(k + l + m) where k is myArray length, l is otherArray length and m is intersection array length
-    /// myArray.lazy.substractToArray(by: otherArray).forEach {
-    ///     print($0)
-    /// }
-    ///
-    /// // this will have time complexity O(k + l) since the intersection check will be executed while iterating forEach
-    /// myArray.lazy.substracted(by: otherArray).forEach {
-    ///     print($0)
-    /// }
-    /// ```
-    /// - Complexity: O(*n* + *m*) on average, where *n* is the original sequence iterator iteration count, and *m* is the substracting sequence iterator iteration count
-    /// - Parameter otherSequence: A sequence to substract this sequence
-    /// - Returns: Array of element from this sequence substracted by given sequence
-    @inlinable func substractToArray<S: Sequence>(by otherSequence: S) -> [Element]
-    where S.Element == Element {
-        substracted(by: otherSequence).asArray
-    }
-    
     /// Create a sequence wrapper that will only iterate elements substracted between two sequence
     /// Since it will only check substracted elements when in iteration, the time complexity for the creation of this sequence is O(1)
     /// - Complexity: Executing this code will have complexity of O(1). Iterating it will have average complexity of O(*n* + *m*) where *n* is the original sequence iterator iteration count, and *m* is the substracting sequence iterator iteration count
@@ -175,28 +82,6 @@ public extension LazySequence where Element: Hashable {
 // MARK: AnyObject LazySequence + Extensions
 
 public extension LazySequence where Element: AnyObject {
-    
-    /// Simply just shortcut to `objectsSubstracted(by: otherSequence).asArray`
-    /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
-    /// If you just need to iterate the element uniquely, consider using `substracted` instead
-    /// ```
-    /// // this will have time complexity O(k + l + m) where k is myArray length, l is otherArray length and m is intersection array length
-    /// myArray.lazy.objectsSubstractedToArray(by: otherArray).forEach {
-    ///     print($0)
-    /// }
-    ///
-    /// // this will have time complexity O(k + l) since the intersection check will be executed while iterating forEach
-    /// myArray.lazy.objectsSubstracted(by: otherArray).forEach {
-    ///     print($0)
-    /// }
-    /// ```
-    /// - Complexity: O(*n* + *m*) on average, where *n* is the original sequence iterator iteration count, and *m* is the substracting sequence iterator iteration count
-    /// - Parameter otherSequence: A sequence to substract this sequence
-    /// - Returns: Array of object from this sequence substracted by given sequence
-    @inlinable func objectsSubstractToArray<S: Sequence>(by otherSequence: S) -> [Element]
-    where S.Element == Element {
-        objectsSubstracted(by: otherSequence).asArray
-    }
     
     /// Create a sequence wrapper that will only iterate objects substracted between two sequence
     /// Since it will only check substracted objects when in iteration, the time complexity for the creation of this sequence is O(1)

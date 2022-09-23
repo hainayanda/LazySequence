@@ -11,32 +11,6 @@ import Foundation
 
 public extension LazySequence  {
     
-    /// Simply just shortcut to `intersectioned(with: otherSequence, projection).asArray`
-    /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
-    /// If you just need to iterate the element uniquely, consider using `intersectioned` instead
-    /// ```
-    /// // this will have time complexity O(k + l + m) where k is myArray length, l is otherArray length and m is intersection array length
-    /// myArray.lazy.intersection(with: otherArray) { projecting($0) }.forEach {
-    ///     print($0)
-    /// }
-    ///
-    /// // this will have time complexity O(k + l) since the intersection check will be executed while iterating forEach
-    /// myArray.lazy.intersectioned(with: otherArray) { projecting($0) }.forEach {
-    ///     print($0)
-    /// }
-    /// ```
-    /// - Complexity: O(*n* + *m*) on average, where *n* is the original sequence iterator iteration count, and *m* is the intersecting sequence iterator iteration count
-    /// - Parameters:
-    ///   - otherSequence: A sequence to intersect with this sequence
-    ///   - projection: A closure that accepts an element of this sequence as its argument and returns an hashable value.
-    /// - Returns: Array of element intersecting with this sequence and given sequence
-    @inlinable func intersection<S: Sequence, Projection: Hashable>(
-        with otherSequence: S,
-        usingProjection projection: @escaping (Element) -> Projection) -> [Element]
-    where S.Element == Element {
-        intersectioned(with: otherSequence, usingProjection: projection).asArray
-    }
-    
     /// Create a sequence wrapper that will only iterate elements intersecting between two sequence
     /// Since it will only check intersecting elements when in iteration, the time complexity for the creation of this sequence is O(1)
     /// - Complexity: Executing this code will have complexity of O(1). Iterating it will have average complexity of O(*n* + *m*) where *n* is the original sequence iterator iteration count, and *m* is the intersecting sequence iterator iteration count
@@ -55,29 +29,6 @@ public extension LazySequence  {
                 projection: projection
             )
         )
-    }
-    
-    /// Simply just shortcut to `intersectioned(with: otherSequence, where: consideredSame).asArray`
-    /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
-    /// If you just need to iterate the element uniquely, consider using `intersectioned` instead
-    /// ```
-    /// // this will have time complexity O((k * l) + m) where k is myArray length, l is otherArray length and m is intersection array length
-    /// myArray.lazy.intersection(with: otherArray).forEach {
-    ///     print($0)
-    /// }
-    ///
-    /// // this will have time complexity O(k * l) since the intersection check will be executed while iterating forEach
-    /// myArray.lazy.intersectioned(with: otherArray).forEach {
-    ///     print($0)
-    /// }
-    /// ```
-    /// - Complexity: O(*n* *m*) on average, where *n* is the original sequence iterator iteration count, and *m* is the intersecting sequence iterator iteration count
-    /// - Parameter otherSequence: A sequence to intersect with this sequence
-    /// - Parameter consideredSame: A Closure that takes two elements as arguments and Bool as return value. If its return `True`, then the element will be considered the same, otherwise its not.
-    /// - Returns: Array of element intersecting with this sequence and given sequence
-    @inlinable func intersection<S: Sequence>(with otherSequence: S, where consideredSame: @escaping (Element, Element) -> Bool) -> [Element]
-    where S.Element == Element {
-        intersectioned(with: otherSequence, where: consideredSame).asArray
     }
     
     /// Create a sequence wrapper that will only iterate elements intersecting between two sequence
@@ -102,28 +53,6 @@ public extension LazySequence  {
 
 public extension LazySequence where Element: Equatable {
     
-    /// Simply just shortcut to `intersectioned(with: otherSequence).asArray`
-    /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
-    /// If you just need to iterate the element uniquely, consider using `intersectioned` instead
-    /// ```
-    /// // this will have time complexity O((k * l) + m) where k is myArray length, l is otherArray length and m is intersection array length
-    /// myArray.lazy.intersection(with: otherArray).forEach {
-    ///     print($0)
-    /// }
-    ///
-    /// // this will have time complexity O(k * l) since the intersection check will be executed while iterating forEach
-    /// myArray.lazy.intersectioned(with: otherArray).forEach {
-    ///     print($0)
-    /// }
-    /// ```
-    /// - Complexity: O(*n* *m*) on average, where *n* is the original sequence iterator iteration count, and *m* is the intersecting sequence iterator iteration count
-    /// - Parameter otherSequence: A sequence to intersect with this sequence
-    /// - Returns: Array of element intersecting with this sequence and given sequence
-    @inlinable func intersection<S: Sequence>(with otherSequence: S) -> [Element]
-    where S.Element == Element {
-        intersection(with: otherSequence, where: ==)
-    }
-    
     /// Create a sequence wrapper that will only iterate elements intersecting between two sequence
     /// Since it will only check intersecting elements when in iteration, the time complexity for the creation of this sequence is O(1)
     /// - Complexity: Executing this code will have complexity of O(1). Iterating it will have average complexity of O(*n* *m*) where *n* is the original sequence iterator iteration count, and *m* is the intersecting sequence iterator iteration count
@@ -139,28 +68,6 @@ public extension LazySequence where Element: Equatable {
 
 public extension LazySequence where Element: Hashable {
     
-    /// Simply just shortcut to `intersectioned(with: otherSequence).asArray`
-    /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
-    /// If you just need to iterate the element uniquely, consider using `intersectioned` instead
-    /// ```
-    /// // this will have time complexity O(k + l + m) where k is myArray length, l is otherArray length and m is intersection array length
-    /// myArray.lazy.intersection(with: otherArray).forEach {
-    ///     print($0)
-    /// }
-    ///
-    /// // this will have time complexity O(k + l) since the intersection check will be executed while iterating forEach
-    /// myArray.lazy.intersectioned(with: otherArray).forEach {
-    ///     print($0)
-    /// }
-    /// ```
-    /// - Complexity: O(*n* + *m*) on average, where *n* is the original sequence iterator iteration count, and *m* is the intersecting sequence iterator iteration count
-    /// - Parameter otherSequence: A sequence to intersect with this sequence
-    /// - Returns: Array of element intersecting with this sequence and given sequence
-    @inlinable func intersection<S: Sequence>(with otherSequence: S) -> [Element]
-    where S.Element == Element {
-        intersectioned(with: otherSequence).asArray
-    }
-    
     /// Create a sequence wrapper that will only iterate elements intersecting between two sequence
     /// Since it will only check intersecting elements when in iteration, the time complexity for the creation of this sequence is O(1)
     /// - Complexity: Executing this code will have complexity of O(1). Iterating it will have average complexity of O(*n* + *m*) where *n* is the original sequence iterator iteration count, and *m* is the intersecting sequence iterator iteration count
@@ -175,28 +82,6 @@ public extension LazySequence where Element: Hashable {
 // MARK: AnyObject Sequence + Extensions
 
 public extension LazySequence where Element: AnyObject {
-    
-    /// Simply just shortcut to `objectIntersectioned(with: otherSequence).asArray`
-    /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
-    /// If you just need to iterate the element uniquely, consider using `intersectioned` instead
-    /// ```
-    /// // this will have time complexity O(k + l + m) where k is myArray length, l is otherArray length and m is intersection array length
-    /// myArray.lazy.objectsIntersection(with: otherArray).forEach {
-    ///     print($0)
-    /// }
-    ///
-    /// // this will have time complexity O(k + l) since the intersection check will be executed while iterating forEach
-    /// myArray.lazy.objectIntersectioned(with: otherArray).forEach {
-    ///     print($0)
-    /// }
-    /// ```
-    /// - Complexity: O(*n* + *m*) on average, where *n* is the original sequence iterator iteration count, and *m* is the intersecting sequence iterator iteration count
-    /// - Parameter otherSequence: A sequence to intersect with this sequence
-    /// - Returns: Array of objects intersecting with this sequence and given sequence
-    @inlinable func objectsIntersection<S: Sequence>(with otherSequence: S) -> [Element]
-    where S.Element == Element {
-        objectIntersectioned(with: otherSequence).asArray
-    }
     
     /// Create a sequence wrapper that will only iterate objects intersecting between two sequence
     /// Since it will only check intersecting objects when in iteration, the time complexity for the creation of this sequence is O(1)
