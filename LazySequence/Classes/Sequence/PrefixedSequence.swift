@@ -7,7 +7,7 @@
 
 import Foundation
 
-// MARK: Sequence + Extensions
+// MARK: LazySequence + Extensions
 
 public extension LazySequence {
     

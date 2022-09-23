@@ -7,10 +7,16 @@
 
 import Foundation
 
+// MARK: Sequence + Extensions
+
 public extension Sequence {
+    /// Create new LazySequence from this instance if needed.
+    /// If this instance is already LazySequence, it will just return itself
     @inlinable var lazy: LazySequence<Element> {
         self as? LazySequence<Element> ?? LazySequence(sequence: self)
     }
+    
+    // MARK: Unique
     
     /// Simply just shortcut to `lazy.uniqued(projection).asArray`
     /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
@@ -56,6 +62,8 @@ public extension Sequence {
         lazy.uniqued(where: consideredSame).asArray
     }
     
+    // MARK: Symetric Difference
+    
     /// Simply just shortcut to `lazy.symetricDifferenced(from: otherSequence, projection).asArray`
     /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
     /// If you just need to iterate the element uniquely, consider using `symetricDifferenced` instead
@@ -81,6 +89,8 @@ public extension Sequence {
     where S.Element == Element {
         lazy.symetricDifferenced(from: otherSequence, projection).asArray
     }
+    
+    // MARK: Intersection
     
     /// Simply just shortcut to `lazy.intersectioned(with: otherSequence, projection).asArray`
     /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
@@ -130,6 +140,8 @@ public extension Sequence {
     where S.Element == Element {
         lazy.intersectioned(with: otherSequence, where: consideredSame).asArray
     }
+    
+    // MARK: Substract
     
     /// Simply just shortcut to `lazy.substracted(by: otherSequence, projection).asArray`
     /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
@@ -181,7 +193,11 @@ public extension Sequence {
     }
 }
 
+// MARK: Equatable Sequence + Extensions
+
 public extension Sequence where Element: Equatable {
+    
+    // MARK: Unique
     
     /// Simply just shortcut to `lazy.uniqued.asArray`
     /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
@@ -202,6 +218,8 @@ public extension Sequence where Element: Equatable {
     @inlinable var unique: [Element] {
         lazy.uniqued.asArray
     }
+    
+    // MARK: Symetric Difference
     
     /// Simply just shortcut to `lazy.symetricDifferenced(from: otherSequence).asArray`
     /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
@@ -225,6 +243,8 @@ public extension Sequence where Element: Equatable {
         lazy.symetricDifferenced(from: otherSequence).asArray
     }
     
+    // MARK: Intersection
+    
     /// Simply just shortcut to `lazy.intersectioned(with: otherSequence).asArray`
     /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
     /// If you just need to iterate the element uniquely, consider using `intersectioned` instead
@@ -246,6 +266,8 @@ public extension Sequence where Element: Equatable {
     where S.Element == Element {
         lazy.intersectioned(with: otherSequence).asArray
     }
+    
+    // MARK: Substract
     
     /// Simply just shortcut to `lazy.substracted(by: otherSequence).asArray`
     /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
@@ -270,7 +292,11 @@ public extension Sequence where Element: Equatable {
     }
 }
 
+// MARK: Hashable Sequence + Extensions
+
 public extension Sequence where Element: Hashable {
+    
+    // MARK: Unique
     
     /// Simply just shortcut to `lazy.uniqued.asArray`
     /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
@@ -291,6 +317,8 @@ public extension Sequence where Element: Hashable {
     @inlinable var unique: [Element] {
         lazy.uniqued.asArray
     }
+    
+    // MARK: Symetric Difference
     
     /// Simply just shortcut to `lazy.symetricDifferenced(from: otherSequence).asArray`
     /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
@@ -314,6 +342,8 @@ public extension Sequence where Element: Hashable {
         lazy.symetricDifferenced(from: otherSequence).asArray
     }
     
+    // MARK: Intersection
+    
     /// Simply just shortcut to `lazy.intersectioned(with: otherSequence).asArray`
     /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
     /// If you just need to iterate the element uniquely, consider using `intersectioned` instead
@@ -335,6 +365,8 @@ public extension Sequence where Element: Hashable {
     where S.Element == Element {
         lazy.intersectioned(with: otherSequence).asArray
     }
+    
+    // MARK: Substract
     
     /// Simply just shortcut to `lazy.substracted(by: otherSequence).asArray`
     /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
@@ -359,7 +391,11 @@ public extension Sequence where Element: Hashable {
     }
 }
 
+// MARK: AnyObject Sequence + Extensions
+
 public extension Sequence where Element: AnyObject {
+    
+    // MARK: Unique
     
     /// Simply just shortcut to `lazy.uniquedObjects.asArray`
     /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
@@ -380,6 +416,8 @@ public extension Sequence where Element: AnyObject {
     @inlinable var uniqueObjects: [Element] {
         lazy.uniquedObjects.asArray
     }
+    
+    // MARK: Symetric Difference
     
     /// Simply just shortcut to `lazy.objectsSymetricDifferenced(from: otherSequence).asArray`
     /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
@@ -403,6 +441,8 @@ public extension Sequence where Element: AnyObject {
         lazy.objectsSymetricDifferenced(from: otherSequence).asArray
     }
     
+    // MARK: Intersection
+    
     /// Simply just shortcut to `lazy.objectIntersectioned(with: otherSequence).asArray`
     /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
     /// If you just need to iterate the element uniquely, consider using `intersectioned` instead
@@ -424,6 +464,8 @@ public extension Sequence where Element: AnyObject {
     where S.Element == Element {
         lazy.objectIntersectioned(with: otherSequence).asArray
     }
+    
+    // MARK: Substract
     
     /// Simply just shortcut to `lazy.objectsSubstracted(by: otherSequence).asArray`
     /// Keep in mind this will automatically run the iterator iteration when creating an new Array.

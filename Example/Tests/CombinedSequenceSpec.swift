@@ -18,7 +18,7 @@ class CombinedSequenceSpec: QuickSpec {
             let first: [DummyEquatable] = .dummies(count: Int.random(in: 10..<50))
             let second: [DummyEquatable] = .dummies(count: Int.random(in: 10..<50))
             let expected = first + second
-            expect(first.lazy.combinedToArray(with: second)).to(equal(expected))
+            expect(first.lazy.combined(with: second).asArray).to(equal(expected))
         }
         it("should be faster than swift regular append when doing multiple combined") {
             switch compareAvgAppendAndCombinedTimeInterval() {
