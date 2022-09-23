@@ -7,9 +7,9 @@
 
 import Foundation
 
-// MARK: Sequence + Extensions
+// MARK: LazySequence + Extensions
 
-public extension Sequence {
+public extension LazySequence {
     
     /// Create a sequence wrapper that will filter each element during iterator iteration.
     /// Since it will only map when in iteration, the time complexity for the creation of this sequence is O(1) and the iteration time complexity will be the same as the original sequence iteration.
@@ -18,12 +18,12 @@ public extension Sequence {
     /// // filter itself have time complexity O(n)
     /// // The forEach iteration will have time complexity of O(m) where m is length of filtered array.
     /// // So then overall time complexity will be O(n) + O(m) which is O(n + m)
-    /// myArray.filter { shouldInclude($0) }.forEach {
+    /// myArray.lazy.filter { shouldInclude($0) }.forEach {
     ///     print($0)
     /// }
     ///
     /// // this operation below will have time complexity around O(n) since it will do the filter operation in the iteration itself
-    /// myArray.filtered { shouldInclude($0) }.forEach {
+    /// myArray.lazy.filtered { shouldInclude($0) }.forEach {
     ///     print($0)
     /// }
     /// ```
@@ -35,7 +35,7 @@ public extension Sequence {
     }
 }
 
-public extension Sequence where Element: Equatable {
+public extension LazySequence where Element: Equatable {
     @inlinable func withRemoved(_ element: Element) -> LazySequence<Element> {
         filtered { $0 != element }
     }

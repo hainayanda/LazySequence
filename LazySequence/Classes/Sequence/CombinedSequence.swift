@@ -7,19 +7,19 @@
 
 import Foundation
 
-// MARK: Sequence + Extensions
+// MARK: LazySequence + Extensions
 
-public extension Sequence {
+public extension LazySequence {
     
     /// Simply just shortcut to `combined(with: otherSequence).asArray`
     /// Just use this if the array result is final.
     /// If more sequences is needed, better use the *combinedSequence* method to reduce the time complexity.
     /// ```
     /// // this will have time complexity O(4j + 4k + 3l + 2m + n)
-    /// let array = j.combinedToArray(with: k).combinedToArray(with: l).combinedToArray(with: m).combinedToArray(with: n)
+    /// let array = j.lazy.combinedToArray(with: k).combinedToArray(with: l).combinedToArray(with: m).combinedToArray(with: n)
     ///
     /// // this will have time complexity O(1)
-    /// let sequence = j.combined(with: k).combined(with: l).combined(with: m).combined(with: n)
+    /// let sequence = j.lazy.combined(with: k).combined(with: l).combined(with: m).combined(with: n)
     /// // this will have time complexity O(j + k + l + m + n)
     /// let arrayCombined = Array(sequence)
     /// // this iteration will have time complexity O(j + k + l + m + n) too without creating a new array
@@ -38,10 +38,10 @@ public extension Sequence {
     /// This will reduce the time complexity needed to perform such actions especially if dealing with combining a lot of sequence
     /// ```
     /// // this will have time complexity O(4j + 4k + 3l + 2m + n)
-    /// let array = j.combinedToArray(with: k).combinedToArray(with: l).combinedToArray(with: m).combinedToArray(with: n)
+    /// let array = j.lazy.combinedToArray(with: k).combinedToArray(with: l).combinedToArray(with: m).combinedToArray(with: n)
     ///
     /// // this will have time complexity O(1)
-    /// let sequence = j.combined(with: k).combined(with: l).combined(with: m).combined(with: n)
+    /// let sequence = j.lazy.combined(with: k).combined(with: l).combined(with: m).combined(with: n)
     /// // this will have time complexity O(j + k + l + m + n)
     /// let arrayCombined = Array(sequence)
     /// // this iteration will have time complexity O(j + k + l + m + n) too without creating a new array

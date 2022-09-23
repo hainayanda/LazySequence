@@ -7,7 +7,9 @@
 
 import Foundation
 
-public extension Sequence {
+// MARK: LazySequence + Extensions
+
+public extension LazySequence {
     /// Create a LazySequence that will insert given element for each given intervals when iterating.
     /// eg: `[1, 2, 3, 4]` will be iterated as `[1, 0, 2, 0, 3, 0, 4, 0]` if the given intervals is `1` and element is `0`.
     /// will be iterated as `[1, 2, 0, 3, 4, 0]` if the given intervals is `2` and element is `0`.

@@ -7,21 +7,21 @@
 
 import Foundation
 
-// MARK: Sequence + Extensions
+// MARK: LazySequence + Extensions
 
-public extension Sequence  {
+public extension LazySequence  {
     
     /// Simply just shortcut to `intersectioned(with: otherSequence, projection).asArray`
     /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
     /// If you just need to iterate the element uniquely, consider using `intersectioned` instead
     /// ```
     /// // this will have time complexity O(k + l + m) where k is myArray length, l is otherArray length and m is intersection array length
-    /// myArray.intersection(with: otherArray) { projecting($0) }.forEach {
+    /// myArray.lazy.intersection(with: otherArray) { projecting($0) }.forEach {
     ///     print($0)
     /// }
     ///
     /// // this will have time complexity O(k + l) since the intersection check will be executed while iterating forEach
-    /// myArray.intersectioned(with: otherArray) { projecting($0) }.forEach {
+    /// myArray.lazy.intersectioned(with: otherArray) { projecting($0) }.forEach {
     ///     print($0)
     /// }
     /// ```
@@ -62,12 +62,12 @@ public extension Sequence  {
     /// If you just need to iterate the element uniquely, consider using `intersectioned` instead
     /// ```
     /// // this will have time complexity O((k * l) + m) where k is myArray length, l is otherArray length and m is intersection array length
-    /// myArray.intersection(with: otherArray).forEach {
+    /// myArray.lazy.intersection(with: otherArray).forEach {
     ///     print($0)
     /// }
     ///
     /// // this will have time complexity O(k * l) since the intersection check will be executed while iterating forEach
-    /// myArray.intersectioned(with: otherArray).forEach {
+    /// myArray.lazy.intersectioned(with: otherArray).forEach {
     ///     print($0)
     /// }
     /// ```
@@ -98,21 +98,21 @@ public extension Sequence  {
     }
 }
 
-// MARK: Equatable Sequence + Extensions
+// MARK: Equatable LazySequence + Extensions
 
-public extension Sequence where Element: Equatable {
+public extension LazySequence where Element: Equatable {
     
     /// Simply just shortcut to `intersectioned(with: otherSequence).asArray`
     /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
     /// If you just need to iterate the element uniquely, consider using `intersectioned` instead
     /// ```
     /// // this will have time complexity O((k * l) + m) where k is myArray length, l is otherArray length and m is intersection array length
-    /// myArray.intersection(with: otherArray).forEach {
+    /// myArray.lazy.intersection(with: otherArray).forEach {
     ///     print($0)
     /// }
     ///
     /// // this will have time complexity O(k * l) since the intersection check will be executed while iterating forEach
-    /// myArray.intersectioned(with: otherArray).forEach {
+    /// myArray.lazy.intersectioned(with: otherArray).forEach {
     ///     print($0)
     /// }
     /// ```
@@ -137,19 +137,19 @@ public extension Sequence where Element: Equatable {
 
 // MARK: Hashable Sequence + Extensions
 
-public extension Sequence where Element: Hashable {
+public extension LazySequence where Element: Hashable {
     
     /// Simply just shortcut to `intersectioned(with: otherSequence).asArray`
     /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
     /// If you just need to iterate the element uniquely, consider using `intersectioned` instead
     /// ```
     /// // this will have time complexity O(k + l + m) where k is myArray length, l is otherArray length and m is intersection array length
-    /// myArray.intersection(with: otherArray).forEach {
+    /// myArray.lazy.intersection(with: otherArray).forEach {
     ///     print($0)
     /// }
     ///
     /// // this will have time complexity O(k + l) since the intersection check will be executed while iterating forEach
-    /// myArray.intersectioned(with: otherArray).forEach {
+    /// myArray.lazy.intersectioned(with: otherArray).forEach {
     ///     print($0)
     /// }
     /// ```
@@ -174,19 +174,19 @@ public extension Sequence where Element: Hashable {
 
 // MARK: AnyObject Sequence + Extensions
 
-public extension Sequence where Element: AnyObject {
+public extension LazySequence where Element: AnyObject {
     
     /// Simply just shortcut to `objectIntersectioned(with: otherSequence).asArray`
     /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
     /// If you just need to iterate the element uniquely, consider using `intersectioned` instead
     /// ```
     /// // this will have time complexity O(k + l + m) where k is myArray length, l is otherArray length and m is intersection array length
-    /// myArray.objectsIntersection(with: otherArray).forEach {
+    /// myArray.lazy.objectsIntersection(with: otherArray).forEach {
     ///     print($0)
     /// }
     ///
     /// // this will have time complexity O(k + l) since the intersection check will be executed while iterating forEach
-    /// myArray.objectIntersectioned(with: otherArray).forEach {
+    /// myArray.lazy.objectIntersectioned(with: otherArray).forEach {
     ///     print($0)
     /// }
     /// ```

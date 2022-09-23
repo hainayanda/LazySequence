@@ -23,6 +23,10 @@ public final class LazySequence<Element>: Sequence {
         self.iteratorFactory = iteratorFactory
     }
     
+    public convenience init<S: Sequence>(sequence: S) where S.Element == Element {
+        self.init(iterator: LazySequenceIteratorWrapper(sequence: sequence))
+    }
+    
     public func makeIterator() -> Iterator {
         iteratorFactory()
     }
@@ -35,5 +39,20 @@ open class LazySequenceIterator<Element>: IteratorProtocol {
     
     open func next() -> Element? {
         fatalError("this method should be overriden")
+    }
+}
+
+// MARK: LazySequenceIteratorWrapper
+
+public final class LazySequenceIteratorWrapper<Wrapped: Sequence>: LazySequenceIterator<Wrapped.Element> {
+    typealias Iterator = Wrapped.Iterator
+    var iterator: Iterator
+    
+    init(sequence: Wrapped) {
+        self.iterator = sequence.makeIterator()
+    }
+    
+    public override func next() -> Element? {
+        iterator.next()
     }
 }

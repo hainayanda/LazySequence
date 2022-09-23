@@ -7,9 +7,9 @@
 
 import Foundation
 
-// MARK: Sequence + Extensions
+// MARK: LazySequence + Extensions
 
-public extension Sequence {
+public extension LazySequence {
     
     /// Simply just shortcut to `uniqued(projection).asArray`
     /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
@@ -17,12 +17,12 @@ public extension Sequence {
     /// ```
     /// // this will have time complexity O(2n)
     /// // O(n) when in uniqueArray and another O(n) when do forEach operation
-    /// myArray.uniqueArray { projecting($0) }.forEach {
+    /// myArray.lazy.uniqueArray { projecting($0) }.forEach {
     ///     print($0)
     /// }
     ///
     /// // this will have time complexity O(n) since the filtering will be executed while iterating forEach
-    /// myArray.uniqued { projecting($0) }.forEach {
+    /// myArray.lazy.uniqued { projecting($0) }.forEach {
     ///     print($0)
     /// }
     /// ```
@@ -49,12 +49,12 @@ public extension Sequence {
     /// ```
     /// // this will have time complexity O(n^2 + n)
     /// // O(n^2) when in uniqueArray and another O(n) when do forEach operation
-    /// myArray.uniqueArray { $0.id == $0.id }.forEach {
+    /// myArray.lazy.uniqueArray { $0.id == $0.id }.forEach {
     ///     print($0)
     /// }
     ///
     /// // this will have time complexity O(n^2) since the filtering will be executed while iterating forEach
-    /// myArray.uniquedWhere { $0.id == $0.id }.forEach {
+    /// myArray.lazy.uniquedWhere { $0.id == $0.id }.forEach {
     ///     print($0)
     /// }
     /// ```
@@ -80,9 +80,9 @@ public extension Sequence {
     }
 }
 
-// MARK: Equatable Sequence + Extensions
+// MARK: Equatable LazySequence + Extensions
 
-public extension Sequence where Element: Equatable {
+public extension LazySequence where Element: Equatable {
     
     /// Simply just shortcut to `uniqued.asArray`
     /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
@@ -90,12 +90,12 @@ public extension Sequence where Element: Equatable {
     /// ```
     /// // this will have time complexity O(n^2 + n)
     /// // O(n^2) when in uniquedArray and another O(n) when do forEach operation
-    /// myArray.uniquedArray.forEach {
+    /// myArray.lazy.uniquedArray.forEach {
     ///     print($0)
     /// }
     ///
     /// // this will have time complexity O(n^2) since the filtering will be executed while iterating forEach
-    /// myArray.uniqued.forEach {
+    /// myArray.lazy.uniqued.forEach {
     ///     print($0)
     /// }
     /// ```
@@ -112,9 +112,9 @@ public extension Sequence where Element: Equatable {
     }
 }
 
-// MARK: Hashable Sequence + Extensions
+// MARK: Hashable LazySequence + Extensions
 
-public extension Sequence where Element: Hashable {
+public extension LazySequence where Element: Hashable {
     
     /// Simply just shortcut to `uniqued.asArray`
     /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
@@ -122,12 +122,12 @@ public extension Sequence where Element: Hashable {
     /// ```
     /// // this will have time complexity O(2n)
     /// // O(n) when in uniquedArray and another O(n) when do forEach operation
-    /// myArray.uniquedArray.forEach {
+    /// myArray.lazy.uniquedArray.forEach {
     ///     print($0)
     /// }
     ///
     /// // this will have time complexity O(n) since the filtering will be executed while iterating forEach
-    /// myArray.uniqued.forEach {
+    /// myArray.lazy.uniqued.forEach {
     ///     print($0)
     /// }
     /// ```
@@ -145,9 +145,9 @@ public extension Sequence where Element: Hashable {
     }
 }
 
-// MARK: AnyObject Sequence + Extensions
+// MARK: AnyObject LazySequence + Extensions
 
-public extension Sequence where Element: AnyObject {
+public extension LazySequence where Element: AnyObject {
     
     /// Simply just shortcut to `uniquedObjects.asArray`
     /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
@@ -155,12 +155,12 @@ public extension Sequence where Element: AnyObject {
     /// ```
     /// // this will have time complexity O(2n)
     /// // O(n) when in uniquedObjectsArray and another O(n) when do forEach operation
-    /// myArray.uniquedObjectsArray.forEach {
+    /// myArray.lazy.uniquedObjectsArray.forEach {
     ///     print($0)
     /// }
     ///
     /// // this will have time complexity O(n) since the filtering will be executed while iterating forEach
-    /// myArray.uniquedObjects.forEach {
+    /// myArray.lazy.uniquedObjects.forEach {
     ///     print($0)
     /// }
     /// ```

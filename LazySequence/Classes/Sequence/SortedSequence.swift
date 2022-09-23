@@ -7,9 +7,9 @@
 
 import Foundation
 
-// MARK: Sequence + Extensions
+// MARK: LazySequence + Extensions
 
-public extension Sequence {
+public extension LazySequence {
     /// Create a new LazySequence that will iterate this sequence ordered using a given Closure
     /// - Complexity: O(1) on creation and O (*n* log *n*) when iterating, where *n* is the original sequence iterator iteration count
     /// - Parameter areInIncreasingOrder: A predicate that returns `true` if its first argument should be ordered before its second argument, otherwise, `false`.
@@ -19,9 +19,9 @@ public extension Sequence {
     }
 }
 
-// MARK: Comparable Sequence + Extensions
+// MARK: Comparable LazySequence + Extensions
 
-public extension Sequence where Element: Comparable {
+public extension LazySequence where Element: Comparable {
     /// Create a new LazySequence that will iterate this sequence ordered using Comparable
     /// - Complexity: O(1) on creation and O (*n* log *n*) when iterating, where *n* is the original sequence iterator iteration count
     /// - Returns: LazySequence that will iterate this sequence ordered using Comparable

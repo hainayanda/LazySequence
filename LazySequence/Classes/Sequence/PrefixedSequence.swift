@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: Sequence + Extensions
 
-public extension Sequence {
+public extension LazySequence {
     
     /// Capped the sequence iteration to a given maximum iteration count
     /// This will create a new LazySequence that will only iterate the original sequence maximum at a given maximum iteration count
@@ -43,7 +43,7 @@ public extension Sequence {
     }
 }
 
-public extension Sequence where Element: Equatable {
+public extension LazySequence where Element: Equatable {
     
     /// Prefixed a sequence as much until the given element is found
     /// This will create a new LazySequence that will only iterate the original sequence until the given element is found
@@ -55,7 +55,7 @@ public extension Sequence where Element: Equatable {
     }
 }
 
-public extension Sequence where Element: AnyObject {
+public extension LazySequence where Element: AnyObject {
     
     /// Prefixed a sequence as much until the given object is found
     /// This will create a new LazySequence that will only iterate the original sequence until the given object is found

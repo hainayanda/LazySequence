@@ -7,9 +7,9 @@
 
 import Foundation
 
-// MARK: Sequence + Extensions
+// MARK: LazySequence + Extensions
 
-public extension Sequence {
+public extension LazySequence {
     
     /// Capped the sequence iteration to a given maximum iteration count
     /// This will create a new LazySequence that will only iterate the original sequence maximum at a given maximum iteration count
@@ -43,7 +43,7 @@ public extension Sequence {
     }
 }
 
-public extension Sequence where Element: Equatable {
+public extension LazySequence where Element: Equatable {
     /// Drop a sequence elements until the given element is found
     /// This will create a new LazySequence that will only iterate the original sequence after the given element is found
     /// - Complexity: O (*n*) at maximum and O (*m*) at minimum, where *n* is the original sequence iterator iteration count, and *m* is iteration count after condition is met
@@ -54,7 +54,7 @@ public extension Sequence where Element: Equatable {
     }
 }
 
-public extension Sequence where Element: AnyObject {
+public extension LazySequence where Element: AnyObject {
     /// Drop a sequence elements until the given object is found
     /// This will create a new LazySequence that will only iterate the original sequence after the given object is found
     /// - Complexity: O (*n*) at maximum and O (*m*) at minimum, where *n* is the original sequence iterator iteration count, and *m* is iteration count after condition is met

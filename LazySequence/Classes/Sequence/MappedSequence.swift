@@ -7,9 +7,9 @@
 
 import Foundation
 
-// MARK: Sequence + Extensions
+// MARK: LazySequence + Extensions
 
-public extension Sequence {
+public extension LazySequence {
     
     /// Create a sequence wrapper that will map each element during iterator iteration. It will then ignore error and nil from the iteration.
     /// Since it will only map when in iteration, the time complexity for the creation of this sequence is O(1) and the iteration time complexity will be the same as the original sequence iteration.
@@ -23,7 +23,7 @@ public extension Sequence {
     /// }
     ///
     /// // this operation below will have time complexity around O(n) since it will do the transform operation in the iteration itself
-    /// myArray.compactMapped { transform($0) }.forEach {
+    /// myArray.lazy.compactMapped { transform($0) }.forEach {
     ///     print($0)
     /// }
     /// ```
@@ -31,7 +31,7 @@ public extension Sequence {
     /// - Parameter transform: A closure that accepts an element of this sequence as its argument and returns an optional value.
     /// - Returns: LazySequence that will run the transformation during its iterator iteration
     @inlinable func compactMapped<Mapped>(_ transform: @escaping (Element) throws -> Mapped?) -> LazySequence<Mapped> {
-        LazySequence(iterator: CompactMappedSequenceIterator(sequence: self, mapper: transform))
+        LazySequence<Mapped>(iterator: CompactMappedSequenceIterator(sequence: self, mapper: transform))
     }
     
     /// Create a sequence wrapper that will map each element during iterator iteration. It will then ignore error from the iteration.
@@ -46,7 +46,7 @@ public extension Sequence {
     /// }
     ///
     /// // this operation below will have time complexity around O(n) since it will do the transform operation in the iteration itself
-    /// myArray.mapped { transform($0) }.forEach {
+    /// myArray.lazy.mapped { transform($0) }.forEach {
     ///     print($0)
     /// }
     /// ```
@@ -54,11 +54,11 @@ public extension Sequence {
     /// - Parameter transform: A closure that accepts an element of this sequence as its argument and returns mapped value.
     /// - Returns: LazySequence that will run the transformation during its iterator iteration
     @inlinable func mapped<Mapped>(_ transform: @escaping (Element) throws -> Mapped) -> LazySequence<Mapped> {
-        LazySequence(iterator: MappedSequenceIterator(sequence: self, mapper: transform))
+        LazySequence<Mapped>(iterator: MappedSequenceIterator(sequence: self, mapper: transform))
     }
 }
 
-public extension Sequence where Element: OptionalElement {
+public extension LazySequence where Element: OptionalElement {
     
     /// Simply just shortcut to `compactMapped { $0 }`
     /// - Complexity: Executing this code will have complexity of O(1). Iterating it will have complexity of O(*n*) where *n* is the original sequence iteration count.
