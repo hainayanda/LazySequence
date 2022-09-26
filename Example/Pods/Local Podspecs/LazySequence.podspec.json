@@ -18,5 +18,10 @@
   "platforms": {
     "ios": "11.0"
   },
-  "source_files": "LazySequence/Classes/**/*"
+  "source_files": "LazySequence/Classes/**/*",
+  "dependencies": {
+    "Chary": [
+      "~> 1.0.3"
+    ]
+  }
 }
