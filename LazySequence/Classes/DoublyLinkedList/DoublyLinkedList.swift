@@ -12,6 +12,7 @@ import Chary
 
 /// Use this instead of regular array if you need to do many mutable manipulation.
 /// This generally will have less time complexity for most of manipulation task
+/// All public method and property is thread safe
 /// Use array instead if you need to do many direct access to the element using index
 /// This generally will have more time complexity for most of accessing task
 final public class DoublyLinkedList<Element> {

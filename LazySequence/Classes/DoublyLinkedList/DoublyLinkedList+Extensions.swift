@@ -20,6 +20,7 @@ extension DoublyLinkedList: Sequence {
     }
     
     /// Create a LazySequence of Node that will iterate the Nodes of this DoublyLinkedList instead of the elements
+    /// This sequence is not thread safe
     /// - Returns: a new LazySequence
     public func nodeSequence() -> LazySequence<Node> {
         let iterator = DoublyLinkedListNodeIterator(root: root)
@@ -35,10 +36,14 @@ extension DoublyLinkedList: Collection {
     
     public subscript(position: Int) -> Element {
         get {
-            node(at: position)!.element
+            queue.safeSync {
+                node(at: position)!.element
+            }
         }
         set {
-            node(at: position)!.element = newValue
+            queue.safeSync {
+                node(at: position)!.element = newValue
+            }
         }
     }
     
