@@ -26,7 +26,7 @@
 /* Begin PBXFileReference section */
 		607FACE51AFB9204008FA782 /* LazySequence_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LazySequence_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		716998517803728A31FAE9B1 /* LazySequence.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LazySequence.podspec; path = ../LazySequence.podspec; sourceTree = "<group>"; };
+		716998517803728A31FAE9B1 /* LazySequence.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LazySequence.podspec; path = ../LazySequence.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A31033E45EF670EE8307DD35 /* Pods-LazySequence_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LazySequence_Tests.debug.xcconfig"; path = "Target Support Files/Pods-LazySequence_Tests/Pods-LazySequence_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		A7A35EB91587094B8B6D9591 /* Pods_LazySequence_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LazySequence_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB29A9EC28C7066A0017DED9 /* DoublyLinkedListSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoublyLinkedListSpec.swift; sourceTree = "<group>"; };
@@ -239,12 +239,14 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-LazySequence_Tests/Pods-LazySequence_Tests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Chary/Chary.framework",
 				"${BUILT_PRODUCTS_DIR}/LazySequence/LazySequence.framework",
 				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
 				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Chary.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LazySequence.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Quick.framework",
