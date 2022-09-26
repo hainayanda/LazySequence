@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Chary
 
 // MARK: DoublyLinkedList + Sequence
 
@@ -13,7 +14,9 @@ extension DoublyLinkedList: Sequence {
     public typealias Iterator = DoublyLinkedListIterator<Element>
     
     public func makeIterator() -> DoublyLinkedListIterator<Element> {
-        DoublyLinkedListIterator(root: root)
+        queue.safeSync {
+            DoublyLinkedListIterator(root: root)
+        }
     }
     
     /// Create a LazySequence of Node that will iterate the Nodes of this DoublyLinkedList instead of the elements
@@ -43,7 +46,7 @@ extension DoublyLinkedList: Collection {
     
     @inlinable public var startIndex: Int { 0 }
     
-    @inlinable public var endIndex: Int { count }
+    public var endIndex: Int { queue.safeSync { count } }
 }
 
 // MARK: DoublyLinkedList + ExpressibleByArrayLiteral

@@ -11,15 +11,37 @@ import Foundation
 
 public struct DoublyLinkedListIterator<Element>: IteratorProtocol {
     
-    private var currentNode: DoublyLinkedList<Element>.Node?
+    private var currentNode: Node?
     
     init(root: DoublyLinkedList<Element>.Node?) {
-        self.currentNode = root
+        self.currentNode = root?.toIteratorNode()
     }
     
     public mutating func next() -> Element? {
         defer { currentNode = currentNode?.next }
         return currentNode?.element
+    }
+}
+
+// MARK: DoublyLinkedListIterator.Node
+
+extension DoublyLinkedListIterator {
+    class Node {
+        let element: Element
+        let next: Node?
+        
+        init(element: Element, next: Node?) {
+            self.element = element
+            self.next = next
+        }
+    }
+}
+
+// MARK: DoublyLinkedList.Node + Extensions
+
+extension DoublyLinkedList.Node {
+    func toIteratorNode() -> DoublyLinkedListIterator<Element>.Node {
+        .init(element: element, next: next?.toIteratorNode())
     }
 }
 
