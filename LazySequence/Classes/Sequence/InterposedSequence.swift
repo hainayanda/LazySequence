@@ -61,7 +61,9 @@ public extension LazySequence {
 
 // MARK: InterposedSequenceIteratorWrapper
 
-public final class InterposedSequenceIteratorWrapper<BaseSequence: Sequence, InterposerSequence: Sequence>: LazySequenceIterator<BaseSequence.Element> where InterposerSequence.Element == BaseSequence.Element {
+public final class InterposedSequenceIteratorWrapper<BaseSequence: Sequence, InterposerSequence: Sequence>:
+    LazySequenceIterator<BaseSequence.Element>
+where InterposerSequence.Element == BaseSequence.Element {
     
     public typealias Interposer = () -> InterposerSequence
     typealias BaseIterator = BaseSequence.Iterator

@@ -14,9 +14,10 @@ public extension LazySequence {
     /// - Complexity: O(1) on creation and O (*n* log *n*) when iterating, where *n* is the original sequence iterator iteration count
     /// - Parameter areInIncreasingOrder: A predicate that returns `true` if its first argument should be ordered before its second argument, otherwise, `false`.
     /// - Returns: LazySequence that will iterate this sequence ordered using a given Closure
-    @inlinable func sortedSequence(_ areInIncreasingOrder: @escaping (Element, Element) -> Bool) -> LazySequence<Element> {
-        LazySequence(iterator: SortedSequenceIterator(sequence: self, comparator: areInIncreasingOrder))
-    }
+    @inlinable func sortedSequence(
+        _ areInIncreasingOrder: @escaping (Element, Element) -> Bool) -> LazySequence<Element> {
+            LazySequence(iterator: SortedSequenceIterator(sequence: self, comparator: areInIncreasingOrder))
+        }
 }
 
 // MARK: Comparable LazySequence + Extensions

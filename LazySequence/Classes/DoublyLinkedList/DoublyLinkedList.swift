@@ -101,7 +101,7 @@ final public class DoublyLinkedList<Element> {
     /// Append a new elements to this sequence
     /// - Complexity: O (*n*) where *n* is the length of new elements
     /// - Parameter newElements: New elements that will be added at the last of this sequence
-    public func append<S>(contentsOf newElements: S) where S : Sequence, Element == S.Element {
+    public func append<S>(contentsOf newElements: S) where S: Sequence, Element == S.Element {
         queue.safeSync {
             prepareNodes(from: newElements) { sequenceRoot, sequenceTail in
                 guard root != nil, let tail = self.tail else {
@@ -166,7 +166,7 @@ final public class DoublyLinkedList<Element> {
     /// - Parameters:
     ///   - newElements: New elements inserted
     ///   - index: Index of the new elements
-    public func insert<S>(contentsOf newElements: S, at index: Int) where S : Sequence, Element == S.Element {
+    public func insert<S>(contentsOf newElements: S, at index: Int) where S: Sequence, Element == S.Element {
         queue.safeSync {
             if index == count {
                 append(contentsOf: newElements)
@@ -310,7 +310,10 @@ extension DoublyLinkedList {
         node.removeFromLink()
     }
     
-    func prepareNodes<S>(from sequence: S, then doTask: (_ sequenceRoot: Node, _ sequenceTail: Node) -> Void) where S : Sequence, Element == S.Element {
+    func prepareNodes<S>(
+        from sequence: S,
+        then doTask: (_ sequenceRoot: Node, _ sequenceTail: Node) -> Void)
+    where S: Sequence, Element == S.Element {
         let nodes: (root: Node, tail: Node)? = sequence.reduce(nil) { partialResult, element in
             let node = Node(element: element, queue: queue)
             populated[node] = ()

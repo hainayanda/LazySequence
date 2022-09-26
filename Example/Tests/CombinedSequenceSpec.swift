@@ -31,7 +31,7 @@ class CombinedSequenceSpec: QuickSpec {
     }
 }
 
-fileprivate func compareAvgAppendAndCombinedTimeInterval() -> TimeIntervalComparison {
+private func compareAvgAppendAndCombinedTimeInterval() -> TimeIntervalComparison {
     let array1: [DummyEquatable] = .dummies(count: 250)
     let array2: [DummyEquatable] = .dummies(count: 250)
     let array3: [DummyEquatable] = .dummies(count: 250)

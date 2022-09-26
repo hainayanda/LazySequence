@@ -9,34 +9,34 @@
 import Foundation
 
 class DummyObject {
-    let id: UUID
+    let uuid: UUID
     
-    init(id: UUID =  UUID()) {
-        self.id = id
+    init(uuid: UUID =  UUID()) {
+        self.uuid = uuid
     }
 }
 
 struct DummyHashable: Hashable {
-    let id: UUID
+    let uuid: UUID
     
-    init(id: UUID =  UUID()) {
-        self.id = id
+    init(uuid: UUID =  UUID()) {
+        self.uuid = uuid
     }
 }
 
 struct DummyEquatable: Equatable {
-    let id: UUID
+    let uuid: UUID
     
-    init(id: UUID =  UUID()) {
-        self.id = id
+    init(uuid: UUID =  UUID()) {
+        self.uuid = uuid
     }
 }
 
 struct Dummy {
-    let id: UUID
+    let uuid: UUID
     
-    init(id: UUID =  UUID()) {
-        self.id = id
+    init(uuid: UUID =  UUID()) {
+        self.uuid = uuid
     }
 }
 

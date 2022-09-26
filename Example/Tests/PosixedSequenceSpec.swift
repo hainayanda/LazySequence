@@ -54,7 +54,7 @@ class PosixedSequenceSpec: QuickSpec {
     }
 }
 
-fileprivate func comparePosixWithArraySlice() -> TimeIntervalComparison {
+private func comparePosixWithArraySlice() -> TimeIntervalComparison {
     let array: [DummyEquatable] = .dummies(count: 1000)
     return compareAvgTimeIntervalOf {
         let sliced1 = array.dropFirst(500)

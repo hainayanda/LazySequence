@@ -18,8 +18,8 @@ class FilteredSequenceSpec: QuickSpec {
             let source: [DummyEquatable?] = .dummies(count: Int.random(in: 10..<50))
             let expected = source.filter { $0 != nil }
             var count = 0
-            source.lazy.filtered { $0 != nil }.enumerated().forEach { index, id in
-                expect(id).to(equal(expected[index]))
+            source.lazy.filtered { $0 != nil }.enumerated().forEach { index, identifier in
+                expect(identifier).to(equal(expected[index]))
                 count += 1
             }
             expect(count).to(equal(expected.count))
@@ -35,29 +35,29 @@ class FilteredSequenceSpec: QuickSpec {
     }
 }
 
-fileprivate func compareAvgFilterAndFilteredTimeInterval() -> TimeIntervalComparison {
+private func compareAvgFilterAndFilteredTimeInterval() -> TimeIntervalComparison {
     let array: [Dummy] = .dummies(count: 1000)
     return compareAvgTimeIntervalOf {
-        let filtered0 = array.filter { $0.id.uuid.0 % 9 == 0 }
-        let filtered1 = filtered0.filter { $0.id.uuid.1 % 7 == 0 }
-        let filtered2 = filtered1.filter { $0.id.uuid.2 % 5 == 0 }
-        let filtered3 = filtered2.filter { $0.id.uuid.3 % 3 == 0 }
+        let filtered0 = array.filter { $0.uuid.uuid.0 % 9 == 0 }
+        let filtered1 = filtered0.filter { $0.uuid.uuid.1 % 7 == 0 }
+        let filtered2 = filtered1.filter { $0.uuid.uuid.2 % 5 == 0 }
+        let filtered3 = filtered2.filter { $0.uuid.uuid.3 % 3 == 0 }
         filtered3.forEach {
-            expect($0.id.uuid.0 % 9 == 0).to(beTrue())
-            expect($0.id.uuid.1 % 7 == 0).to(beTrue())
-            expect($0.id.uuid.2 % 5 == 0).to(beTrue())
-            expect($0.id.uuid.3 % 3 == 0).to(beTrue())
+            expect($0.uuid.uuid.0 % 9 == 0).to(beTrue())
+            expect($0.uuid.uuid.1 % 7 == 0).to(beTrue())
+            expect($0.uuid.uuid.2 % 5 == 0).to(beTrue())
+            expect($0.uuid.uuid.3 % 3 == 0).to(beTrue())
         }
     } and: {
-        let filtered0 = array.lazy.filtered { $0.id.uuid.0 % 9 == 0 }
-        let filtered1 = filtered0.filtered { $0.id.uuid.1 % 7 == 0 }
-        let filtered2 = filtered1.filtered { $0.id.uuid.2 % 5 == 0 }
-        let filtered3 = filtered2.filtered { $0.id.uuid.3 % 3 == 0 }
+        let filtered0 = array.lazy.filtered { $0.uuid.uuid.0 % 9 == 0 }
+        let filtered1 = filtered0.filtered { $0.uuid.uuid.1 % 7 == 0 }
+        let filtered2 = filtered1.filtered { $0.uuid.uuid.2 % 5 == 0 }
+        let filtered3 = filtered2.filtered { $0.uuid.uuid.3 % 3 == 0 }
         filtered3.forEach {
-            expect($0.id.uuid.0 % 9 == 0).to(beTrue())
-            expect($0.id.uuid.1 % 7 == 0).to(beTrue())
-            expect($0.id.uuid.2 % 5 == 0).to(beTrue())
-            expect($0.id.uuid.3 % 3 == 0).to(beTrue())
+            expect($0.uuid.uuid.0 % 9 == 0).to(beTrue())
+            expect($0.uuid.uuid.1 % 7 == 0).to(beTrue())
+            expect($0.uuid.uuid.2 % 5 == 0).to(beTrue())
+            expect($0.uuid.uuid.3 % 3 == 0).to(beTrue())
         }
     }
 }

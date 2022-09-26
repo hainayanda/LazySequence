@@ -18,8 +18,8 @@ class IntersectionSequenceSpec: QuickSpec {
             let left: [Dummy] = .dummies(count: Int.random(in: 20..<50))
             let expected: [Dummy] = Array(left[0..<15])
             let right: [Dummy] = expected + [Dummy].dummies(count: Int.random(in: 10 ..< 20))
-            let intersection = left.lazy.intersection(with: right) { $0.id }
-            expect(intersection.compactMap { $0.id }).to(equal(expected.compactMap { $0.id }))
+            let intersection = left.lazy.intersection(with: right) { $0.uuid }
+            expect(intersection.compactMap { $0.uuid }).to(equal(expected.compactMap { $0.uuid }))
         }
         it("should intersect equatables") {
             let left: [DummyEquatable] = .dummies(count: Int.random(in: 20..<50))
@@ -40,7 +40,7 @@ class IntersectionSequenceSpec: QuickSpec {
             let expected: [DummyObject] = Array(left[0..<15])
             let right: [DummyObject] = expected + [DummyObject].dummies(count: Int.random(in: 10 ..< 20))
             let intersection = left.lazy.objectsIntersection(with: right)
-            expect(intersection.compactMap { $0.id }).to(equal(expected.compactMap { $0.id }))
+            expect(intersection.compactMap { $0.uuid }).to(equal(expected.compactMap { $0.uuid }))
         }
     }
 }

@@ -21,10 +21,10 @@ class MappedSequenceSpec: QuickSpec {
         }
         it("should mapped iteration") {
             let source: [DummyEquatable] = .dummies(count: Int.random(in: 10..<50))
-            let expected = source.map { $0.id }
+            let expected = source.map { $0.uuid }
             var count = 0
-            source.lazy.mapped { $0.id }.enumerated().forEach { index, id in
-                expect(id).to(equal(expected[index]))
+            source.lazy.mapped { $0.uuid }.enumerated().forEach { index, identifier in
+                expect(identifier).to(equal(expected[index]))
                 count += 1
             }
             expect(count).to(equal(expected.count))
@@ -48,50 +48,50 @@ class MappedSequenceSpec: QuickSpec {
     }
 }
 
-fileprivate func compareAvgMapAndMappedTimeInterval() -> TimeIntervalComparison {
+private func compareAvgMapAndMappedTimeInterval() -> TimeIntervalComparison {
     let array: [DummyEquatable] = .dummies(count: 1000)
     return compareAvgTimeIntervalOf {
-        let mapped1 = array.map { $0.id }
-        let mapped2 = mapped1.map { DummyObject(id: $0) }
-        let mapped3 = mapped2.map { $0.id }
-        let result = mapped3.map { DummyEquatable(id: $0) }
+        let mapped1 = array.map { $0.uuid }
+        let mapped2 = mapped1.map { DummyObject(uuid: $0) }
+        let mapped3 = mapped2.map { $0.uuid }
+        let result = mapped3.map { DummyEquatable(uuid: $0) }
         result.enumerated().forEach { index, element in
             expect(element).to(equal(array[index]))
         }
     } and: {
-        let mapped1 = array.lazy.mapped { $0.id }
-        let mapped2 = mapped1.mapped { DummyObject(id: $0) }
-        let mapped3 = mapped2.mapped { $0.id }
-        let result = mapped3.mapped { DummyEquatable(id: $0) }
+        let mapped1 = array.lazy.mapped { $0.uuid }
+        let mapped2 = mapped1.mapped { DummyObject(uuid: $0) }
+        let mapped3 = mapped2.mapped { $0.uuid }
+        let result = mapped3.mapped { DummyEquatable(uuid: $0) }
         result.enumerated().forEach { index, element in
             expect(element).to(equal(array[index]))
         }
     }
 }
 
-fileprivate func compareAvgCompactMapAndCompactMappedTimeInterval() -> TimeIntervalComparison {
+private func compareAvgCompactMapAndCompactMappedTimeInterval() -> TimeIntervalComparison {
     let array: [Dummy] = .dummies(count: 1000)
     return compareAvgTimeIntervalOf {
-        let mapped1 = array.compactMap { $0.id.uuid.0 % 3 == 0 ? $0.id : nil }
-        let mapped2 = mapped1.compactMap { $0.uuid.1 % 5 == 0 ? DummyObject(id: $0) : nil }
-        let mapped3 = mapped2.compactMap { $0.id.uuid.2 % 7 == 0 ? $0.id : nil }
-        let result = mapped3.compactMap { $0.uuid.3 % 9 == 0 ? DummyEquatable(id: $0) : nil }
+        let mapped1 = array.compactMap { $0.uuid.uuid.0 % 3 == 0 ? $0.uuid : nil }
+        let mapped2 = mapped1.compactMap { $0.uuid.1 % 5 == 0 ? DummyObject(uuid: $0) : nil }
+        let mapped3 = mapped2.compactMap { $0.uuid.uuid.2 % 7 == 0 ? $0.uuid : nil }
+        let result = mapped3.compactMap { $0.uuid.3 % 9 == 0 ? DummyEquatable(uuid: $0) : nil }
         result.forEach {
-            expect($0.id.uuid.0 % 3 == 0).to(beTrue())
-            expect($0.id.uuid.1 % 5 == 0).to(beTrue())
-            expect($0.id.uuid.2 % 7 == 0).to(beTrue())
-            expect($0.id.uuid.3 % 9 == 0).to(beTrue())
+            expect($0.uuid.uuid.0 % 3 == 0).to(beTrue())
+            expect($0.uuid.uuid.1 % 5 == 0).to(beTrue())
+            expect($0.uuid.uuid.2 % 7 == 0).to(beTrue())
+            expect($0.uuid.uuid.3 % 9 == 0).to(beTrue())
         }
     } and: {
-        let mapped1 = array.lazy.compactMapped { $0.id.uuid.0 % 3 == 0 ? $0.id : nil }
-        let mapped2 = mapped1.compactMapped { $0.uuid.1 % 5 == 0 ? DummyObject(id: $0) : nil }
-        let mapped3 = mapped2.compactMapped { $0.id.uuid.2 % 7 == 0 ? $0.id : nil }
-        let result = mapped3.compactMapped { $0.uuid.3 % 9 == 0 ? DummyEquatable(id: $0) : nil }
+        let mapped1 = array.lazy.compactMapped { $0.uuid.uuid.0 % 3 == 0 ? $0.uuid : nil }
+        let mapped2 = mapped1.compactMapped { $0.uuid.1 % 5 == 0 ? DummyObject(uuid: $0) : nil }
+        let mapped3 = mapped2.compactMapped { $0.uuid.uuid.2 % 7 == 0 ? $0.uuid : nil }
+        let result = mapped3.compactMapped { $0.uuid.3 % 9 == 0 ? DummyEquatable(uuid: $0) : nil }
         result.forEach {
-            expect($0.id.uuid.0 % 3 == 0).to(beTrue())
-            expect($0.id.uuid.1 % 5 == 0).to(beTrue())
-            expect($0.id.uuid.2 % 7 == 0).to(beTrue())
-            expect($0.id.uuid.3 % 9 == 0).to(beTrue())
+            expect($0.uuid.uuid.0 % 3 == 0).to(beTrue())
+            expect($0.uuid.uuid.1 % 5 == 0).to(beTrue())
+            expect($0.uuid.uuid.2 % 7 == 0).to(beTrue())
+            expect($0.uuid.uuid.3 % 9 == 0).to(beTrue())
         }
     }
 }

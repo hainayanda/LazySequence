@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: LazySequence + Extensions
 
-public extension LazySequence  {
+public extension LazySequence {
     
     /// Create a sequence wrapper that will only iterate elements intersecting between two sequence
     /// Since it will only check intersecting elements when in iteration, the time complexity for the creation of this sequence is O(1)
@@ -18,7 +18,7 @@ public extension LazySequence  {
     ///   - otherSequence: A sequence to intersect with this sequence
     ///   - projection: A closure that accepts an element of this sequence as its argument and returns an hashable value.
     /// - Returns: LazySequence that will check intersecting element during its iterator iteration
-    @inlinable func intersectioned<S: Sequence,  Projection: Hashable>(
+    @inlinable func intersectioned<S: Sequence, Projection: Hashable>(
         with otherSequence: S,
         usingProjection projection: @escaping (Element) -> Projection) -> LazySequence<Element>
     where S.Element == Element {
@@ -37,13 +37,15 @@ public extension LazySequence  {
     /// - Parameter otherSequence: A sequence to intersect with this sequence
     /// - Parameter consideredSame: A Closure that takes two elements as arguments and Bool as return value. If its return `True`, then the element will be considered the same, otherwise its not.
     /// - Returns: LazySequence that will check intersecting element during its iterator iteration
-    @inlinable func intersectioned<S: Sequence>(with otherSequence: S, where consideredSame: @escaping (Element, Element) -> Bool) -> LazySequence<Element>
+    @inlinable func intersectioned<S: Sequence>(
+        with otherSequence: S,
+        where consideredSame: @escaping (Element, Element) -> Bool) -> LazySequence<Element>
     where S.Element == Element {
         LazySequence(
             iterator: IntersectionManualComparisonSequenceIterator(
                 sequence: self,
                 intersectedBy: otherSequence,
-                cosideredSame: consideredSame
+                consideredSame: consideredSame
             )
         )
     }
@@ -75,7 +77,9 @@ public extension LazySequence where Element: Hashable {
     /// - Returns: LazySequence that will check intersecting element during its iterator iteration
     @inlinable func intersectioned<S: Sequence>(with otherSequence: S) -> LazySequence<Element>
     where S.Element == Element {
-        LazySequence(iterator: IntersectionHashableSequenceIterator(sequence: self, intersectedBy: otherSequence))
+        LazySequence(
+            iterator: IntersectionHashableSequenceIterator(sequence: self, intersectedBy: otherSequence)
+        )
     }
 }
 
@@ -96,7 +100,8 @@ public extension LazySequence where Element: AnyObject {
 
 // MARK: IntersectionSequenceIterator
 
-open class IntersectionSequenceIterator<BaseSequence: Sequence, IntersectSequence: Sequence>: LazySequenceIterator<BaseSequence.Element>
+open class IntersectionSequenceIterator<BaseSequence: Sequence, IntersectSequence: Sequence>:
+    LazySequenceIterator<BaseSequence.Element>
 where IntersectSequence.Element == BaseSequence.Element {
     
     typealias BaseIterator = BaseSequence.Iterator
@@ -124,29 +129,34 @@ where IntersectSequence.Element == BaseSequence.Element {
 
 // MARK: IntersectionEquatableSequenceIterator
 
-public final class IntersectionManualComparisonSequenceIterator<BaseSequence: Sequence, IntersectSequence: Sequence>: IntersectionSequenceIterator<BaseSequence, IntersectSequence>
+public final class IntersectionManualComparisonSequenceIterator<BaseSequence: Sequence, IntersectSequence: Sequence>:
+    IntersectionSequenceIterator<BaseSequence, IntersectSequence>
 where IntersectSequence.Element == BaseSequence.Element {
     public typealias Comparison = (Element, Element) -> Bool
     
     let intersector: IntersectSequence
-    let cosideredSame: Comparison
+    let consideredSame: Comparison
     
-    public init(sequence: BaseSequence, intersectedBy intersector: IntersectSequence, cosideredSame: @escaping Comparison) {
-        self.intersector = intersector
-        self.cosideredSame = cosideredSame
-        super.init(sequence: sequence)
-    }
+    public init(
+        sequence: BaseSequence,
+        intersectedBy intersector: IntersectSequence,
+        consideredSame: @escaping Comparison) {
+            self.intersector = intersector
+            self.consideredSame = consideredSame
+            super.init(sequence: sequence)
+        }
     
     public override func nextIfNotAppearsInIntersector(for element: IntersectionSequenceIterator<BaseSequence, IntersectSequence>.Element) -> Bool {
-        !intersector.contains(where: { cosideredSame(element, $0) })
+        !intersector.contains(where: { consideredSame(element, $0) })
     }
 }
 
 // MARK: IntersectionHashableSequenceIterator
 
-public final class IntersectionHashableSequenceIterator<BaseSequence: Sequence, IntersectSequence: Sequence>: IntersectionSequenceIterator<BaseSequence, IntersectSequence>
+public final class IntersectionHashableSequenceIterator<BaseSequence: Sequence, IntersectSequence: Sequence>:
+    IntersectionSequenceIterator<BaseSequence, IntersectSequence>
 where BaseSequence.Element: Hashable,
-        IntersectSequence.Element == BaseSequence.Element {
+      IntersectSequence.Element == BaseSequence.Element {
     
     typealias IntersectIterator = IntersectSequence.Iterator
     
@@ -158,7 +168,7 @@ where BaseSequence.Element: Hashable,
         super.init(sequence: sequence)
     }
     
-    public override func nextIfNotAppearsInIntersector(for element: IntersectionSequenceIterator<BaseSequence, IntersectSequence>.Element) -> Bool {
+    public override func nextIfNotAppearsInIntersector(for element: Element) -> Bool {
         guard populated[element] == nil else {
             return false
         }
@@ -174,7 +184,8 @@ where BaseSequence.Element: Hashable,
 
 // MARK: IntersectionProjectionSequenceIterator
 
-public final class IntersectionProjectionSequenceIterator<BaseSequence: Sequence, IntersectSequence: Sequence, Projection: Hashable>: IntersectionSequenceIterator<BaseSequence, IntersectSequence>
+public final class IntersectionProjectionSequenceIterator<BaseSequence: Sequence, IntersectSequence: Sequence, Projection: Hashable>:
+    IntersectionSequenceIterator<BaseSequence, IntersectSequence>
 where IntersectSequence.Element == BaseSequence.Element {
     
     public typealias HashProjection = (Element) -> Projection
@@ -184,11 +195,14 @@ where IntersectSequence.Element == BaseSequence.Element {
     var populated: [Projection: Void] = [:]
     let hashProjection: HashProjection
     
-    public init(sequence: BaseSequence, intersectedBy intersector: IntersectSequence, projection: @escaping HashProjection) {
-        self.hashProjection = projection
-        self.intersectIterator = intersector.makeIterator()
-        super.init(sequence: sequence)
-    }
+    public init(
+        sequence: BaseSequence,
+        intersectedBy intersector: IntersectSequence,
+        projection: @escaping HashProjection) {
+            self.hashProjection = projection
+            self.intersectIterator = intersector.makeIterator()
+            super.init(sequence: sequence)
+        }
     
     public override func nextIfNotAppearsInIntersector(for element: Element) -> Bool {
         let projection = hashProjection(element)

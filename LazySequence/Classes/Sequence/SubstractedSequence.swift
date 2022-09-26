@@ -37,7 +37,9 @@ public extension LazySequence {
     /// - Parameter otherSequence: A sequence to substract this sequence
     /// - Parameter consideredSame: A Closure that takes two elements as arguments and Bool as return value. If its return `True`, then the element will be considered the same, otherwise its not.
     /// - Returns: LazySequence that will check substracted element during its iterator iteration
-    @inlinable func substracted<S: Sequence>(by otherSequence: S, where consideredSame: @escaping (Element, Element) -> Bool) -> LazySequence<Element>
+    @inlinable func substracted<S: Sequence>(
+        by otherSequence: S,
+        where consideredSame: @escaping (Element, Element) -> Bool) -> LazySequence<Element>
     where S.Element == Element {
         LazySequence(
             iterator: SubstractedManualComparisonSequenceIterator(
@@ -75,7 +77,12 @@ public extension LazySequence where Element: Hashable {
     /// - Returns: LazySequence that will check substracted element during its iterator iteration
     @inlinable func substracted<S: Sequence>(by otherSequence: S) -> LazySequence<Element>
     where S.Element == Element {
-        LazySequence(iterator: SubstractedHashableSequenceIterator(sequence: self, substractedBy: otherSequence))
+        LazySequence(
+            iterator: SubstractedHashableSequenceIterator(
+                sequence: self,
+                substractedBy: otherSequence
+            )
+        )
     }
 }
 
@@ -96,7 +103,8 @@ public extension LazySequence where Element: AnyObject {
 
 // MARK: SubstractedSequenceIterator
 
-open class SubstractedSequenceIterator<BaseSequence: Sequence, SubstractSequence: Sequence>:  LazySequenceIterator<BaseSequence.Element>
+open class SubstractedSequenceIterator<BaseSequence: Sequence, SubstractSequence: Sequence>:
+    LazySequenceIterator<BaseSequence.Element>
 where SubstractSequence.Element == BaseSequence.Element {
     
     typealias BaseIterator = BaseSequence.Iterator
@@ -124,18 +132,22 @@ where SubstractSequence.Element == BaseSequence.Element {
 
 // MARK: SubstractedEquatableSequenceIterator
 
-public final class SubstractedManualComparisonSequenceIterator<BaseSequence: Sequence, SubstractSequence: Sequence>: SubstractedSequenceIterator<BaseSequence, SubstractSequence>
+public final class SubstractedManualComparisonSequenceIterator<BaseSequence: Sequence, SubstractSequence: Sequence>:
+    SubstractedSequenceIterator<BaseSequence, SubstractSequence>
 where SubstractSequence.Element == BaseSequence.Element {
     public typealias Comparison = (Element, Element) -> Bool
     
     let substractor: SubstractSequence
     let consideredSame: Comparison
     
-    public init(sequence: BaseSequence, substractedBy substractor: SubstractSequence, consideredSame: @escaping Comparison) {
-        self.substractor = substractor
-        self.consideredSame = consideredSame
-        super.init(sequence: sequence)
-    }
+    public init(
+        sequence: BaseSequence,
+        substractedBy substractor: SubstractSequence,
+        consideredSame: @escaping Comparison) {
+            self.substractor = substractor
+            self.consideredSame = consideredSame
+            super.init(sequence: sequence)
+        }
     
     public override func nextIfAppearsInSubstractor(for element: Element) -> Bool {
         substractor.contains(where: { consideredSame(element, $0) })
@@ -144,7 +156,8 @@ where SubstractSequence.Element == BaseSequence.Element {
 
 // MARK: SubstractedHashableSequenceIterator
 
-public final class SubstractedHashableSequenceIterator<BaseSequence: Sequence, SubstractSequence: Sequence>: SubstractedSequenceIterator<BaseSequence, SubstractSequence>
+public final class SubstractedHashableSequenceIterator<BaseSequence: Sequence, SubstractSequence: Sequence>:
+    SubstractedSequenceIterator<BaseSequence, SubstractSequence>
 where BaseSequence.Element: Hashable,
       SubstractSequence.Element == BaseSequence.Element {
     
@@ -174,7 +187,8 @@ where BaseSequence.Element: Hashable,
 
 // MARK: SubstractedProjectionSequenceIterator
 
-public final class SubstractedProjectionSequenceIterator<BaseSequence: Sequence, SubstractSequence: Sequence, Projection: Hashable>: SubstractedSequenceIterator<BaseSequence, SubstractSequence>
+public final class SubstractedProjectionSequenceIterator<BaseSequence: Sequence, SubstractSequence: Sequence, Projection: Hashable>:
+    SubstractedSequenceIterator<BaseSequence, SubstractSequence>
 where SubstractSequence.Element == BaseSequence.Element {
     
     public typealias HashProjection = (Element) -> Projection
@@ -184,13 +198,16 @@ where SubstractSequence.Element == BaseSequence.Element {
     var populated: [Projection: Void] = [:]
     let hashProjection: HashProjection
     
-    public init(sequence: BaseSequence, substractedBy substractor: SubstractSequence, projection: @escaping HashProjection) {
-        self.hashProjection = projection
-        self.substractIterator = substractor.makeIterator()
-        super.init(sequence: sequence)
-    }
+    public init(
+        sequence: BaseSequence,
+        substractedBy substractor: SubstractSequence,
+        projection: @escaping HashProjection) {
+            self.hashProjection = projection
+            self.substractIterator = substractor.makeIterator()
+            super.init(sequence: sequence)
+        }
     
-    public override func nextIfAppearsInSubstractor(for element: SubstractedSequenceIterator<BaseSequence, SubstractSequence>.Element) -> Bool {
+    public override func nextIfAppearsInSubstractor(for element: Element) -> Bool {
         let projection = hashProjection(element)
         guard populated[projection] == nil else {
             return true

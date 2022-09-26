@@ -17,23 +17,25 @@ public extension LazySequence {
     /// - Complexity: Executing this code will have complexity of O(1). Iterating it will have complexity of O(*n*) on average where *n* is the original sequence iterator iteration count
     /// - Parameter projection: A closure that accepts an element of this sequence as its argument and returns an hashable value.
     /// - Returns: LazySequence that will filtering out repeating elements during its iterator iteration
-    @inlinable func uniqued<Projection: Hashable>(byProjection projection: @escaping (Element) -> Projection) -> LazySequence<Element> {
-        LazySequence(iterator: UniqueProjectionSequenceIterator(sequence: self, projection: projection))
-    }
+    @inlinable func uniqued<Projection: Hashable>(
+        byProjection projection: @escaping (Element) -> Projection) -> LazySequence<Element> {
+            LazySequence(iterator: UniqueProjectionSequenceIterator(sequence: self, projection: projection))
+        }
     
     /// Create a sequence wrapper that will filter out repeating elements during iterator iteration.
     /// Since it will only filtering when in iteration, the time complexity for the creation of this sequence is O(1).
     /// - Complexity: Executing this code will have complexity of O(1). Iterating it will have complexity of O(*n*^2) on average where *n* is the original sequence iterator iteration count
     /// - Parameter consideredSame: A Closure that takes two elements as arguments and Bool as return value. If its return `True`, then the element will be considered the same, otherwise its not.
     /// - Returns: LazySequence that will filtering out repeating elements during its iterator iteration
-    @inlinable func uniqued(where consideredSame: @escaping (Element, Element) -> Bool) -> LazySequence<Element> {
-        LazySequence(
-            iterator: UniqueManualComparisonSequenceIterator(
-                sequence: self,
-                where: consideredSame
+    @inlinable func uniqued(
+        where consideredSame: @escaping (Element, Element) -> Bool) -> LazySequence<Element> {
+            LazySequence(
+                iterator: UniqueManualComparisonSequenceIterator(
+                    sequence: self,
+                    where: consideredSame
+                )
             )
-        )
-    }
+        }
 }
 
 // MARK: Equatable LazySequence + Extensions
@@ -100,7 +102,8 @@ open class UniqueSequenceIterator<BaseSequence: Sequence>: LazySequenceIterator<
 
 // MARK: UniqueManualComparisonSequenceIterator
 
-public final class UniqueManualComparisonSequenceIterator<BaseSequence: Sequence>: UniqueSequenceIterator<BaseSequence> {
+public final class UniqueManualComparisonSequenceIterator<BaseSequence: Sequence>:
+    UniqueSequenceIterator<BaseSequence> {
     
     public typealias Comparison = (Element, Element) -> Bool
     
@@ -112,7 +115,7 @@ public final class UniqueManualComparisonSequenceIterator<BaseSequence: Sequence
         super.init(sequence: sequence)
     }
     
-    public override func nextIfRepeated(for element: UniqueSequenceIterator<BaseSequence>.Element) -> Bool {
+    public override func nextIfRepeated(for element: Element) -> Bool {
         guard !iterated.contains(where: { cosideredSame(element, $0) }) else {
             return true
         }
@@ -123,11 +126,12 @@ public final class UniqueManualComparisonSequenceIterator<BaseSequence: Sequence
 
 // MARK: UniqueHashableSequenceIterator
 
-public final class UniqueHashableSequenceIterator<BaseSequence: Sequence>: UniqueSequenceIterator<BaseSequence> where BaseSequence.Element: Hashable {
+public final class UniqueHashableSequenceIterator<BaseSequence: Sequence>:
+    UniqueSequenceIterator<BaseSequence> where BaseSequence.Element: Hashable {
     
     var iterated: [Element: Void] = [:]
     
-    public override func nextIfRepeated(for element: UniqueSequenceIterator<BaseSequence>.Element) -> Bool {
+    public override func nextIfRepeated(for element: Element) -> Bool {
         guard iterated[element] == nil else {
             return true
         }
@@ -138,7 +142,8 @@ public final class UniqueHashableSequenceIterator<BaseSequence: Sequence>: Uniqu
 
 // MARK: UniqueProjectionSequenceIterator
 
-public final class UniqueProjectionSequenceIterator<BaseSequence: Sequence, Projection: Hashable>: UniqueSequenceIterator<BaseSequence> {
+public final class UniqueProjectionSequenceIterator<BaseSequence: Sequence, Projection: Hashable>:
+    UniqueSequenceIterator<BaseSequence> {
     
     public typealias HashProjection = (Element) -> Projection
     
@@ -150,7 +155,7 @@ public final class UniqueProjectionSequenceIterator<BaseSequence: Sequence, Proj
         super.init(sequence: sequence)
     }
     
-    public override func nextIfRepeated(for element: UniqueSequenceIterator<BaseSequence>.Element) -> Bool {
+    public override func nextIfRepeated(for element: Element) -> Bool {
         let identifier = hashProjection(element)
         guard iterated[identifier] == nil else {
             return true

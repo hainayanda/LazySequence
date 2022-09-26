@@ -27,7 +27,7 @@ class InterpolationSequenceSpec: QuickSpec {
             let array = [1, 2, 3, 4, 5, 6, 7, 8]
             let expected1 = [1, 0, 9, 2, 0, 9, 3, 0, 9, 4, 0, 9, 5, 0, 9, 6, 0, 9, 7, 0, 9, 8, 0, 9]
             let expected2 = [1, 2, 0, 9, 3, 4, 0, 9, 5, 6, 0, 9, 7, 8, 0, 9]
-            let expected3 = [1, 2, 3, 0, 9, 4, 5, 6, 0, 9, 7, 8,]
+            let expected3 = [1, 2, 3, 0, 9, 4, 5, 6, 0, 9, 7, 8]
             expect(array.lazy.inserted(forEach: 1, elements: [0, 9]).asArray).to(equal(expected1))
             expect(array.lazy.inserted(forEach: 2, elements: [0, 9]).asArray).to(equal(expected2))
             expect(array.lazy.inserted(forEach: 3, elements: [0, 9]).asArray).to(equal(expected3))

@@ -17,15 +17,15 @@ class PerformanceSpec: QuickSpec {
         it("should generally faster when doing multiple task than the regular swift") {
             let array: [Dummy] = .dummies(count: 100)
             let result = compareAvgTimeIntervalOf {
-                let sorted = array.sorted { $0.id.uuid.0 > $1.id.uuid.0 }
-                let mapped = sorted.map { DummyEquatable(id: $0.id) }
-                let filtered = mapped.filter { $0.id.uuid.0 % 2 == 0 }
+                let sorted = array.sorted { $0.uuid.uuid.0 > $1.uuid.uuid.0 }
+                let mapped = sorted.map { DummyEquatable(uuid: $0.uuid) }
+                let filtered = mapped.filter { $0.uuid.uuid.0 % 2 == 0 }
                 let result = mapped + filtered
                 result.forEach { print($0) }
             } and: {
-                let sorted = array.lazy.sortedSequence { $0.id.uuid.0 > $1.id.uuid.0 }
-                let mapped = sorted.mapped { DummyEquatable(id: $0.id) }
-                let filtered = mapped.filtered { $0.id.uuid.0 % 2 == 0 }
+                let sorted = array.lazy.sortedSequence { $0.uuid.uuid.0 > $1.uuid.uuid.0 }
+                let mapped = sorted.mapped { DummyEquatable(uuid: $0.uuid) }
+                let filtered = mapped.filtered { $0.uuid.uuid.0 % 2 == 0 }
                 let result = mapped.combined(with: filtered)
                 result.forEach { print($0) }
             }
@@ -35,7 +35,7 @@ class PerformanceSpec: QuickSpec {
             case .lessThanBy(percent: let percent):
                 print("lazy sequence averagely faster than regular sequence by \((percent * 100).rounded(toPlaces: 2))% for multiple task")
             }
-
+            
         }
     }
 }
@@ -59,11 +59,13 @@ func compareAvgTimeIntervalOf(_ task1: () -> Void, and taks2: () -> Void) -> Tim
         intervals2 += timeIntervalOf(task: taks2)
     }
     let difference = intervals1 - intervals2
-    return difference > 0 ? .greaterThanBy(percent: difference / intervals2) : .lessThanBy(percent: abs(difference) / intervals1)
+    return difference > 0 ?
+        .greaterThanBy(percent: difference / intervals2):
+        .lessThanBy(percent: abs(difference) / intervals1)
 }
 
 extension Double {
-    func rounded(toPlaces places:Int) -> Double {
+    func rounded(toPlaces places: Int) -> Double {
         let divisor = pow(10.0, Double(places))
         return (self * divisor).rounded() / divisor
     }

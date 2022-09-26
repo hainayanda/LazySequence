@@ -20,8 +20,8 @@ class LazySequenceExtensionsSpec: QuickSpec {
             let rightSubstracted: [Dummy] = .dummies(count: Int.random(in: 10 ..< 20))
             let expected: [Dummy] = leftSubstracted + rightSubstracted
             let right: [Dummy] = Array(left[15..<left.count]) + rightSubstracted
-            let symetricDifference = left.symetricDifference(from: right) { $0.id }
-            expect(symetricDifference.compactMap { $0.id }).to(equal(expected.compactMap { $0.id }))
+            let symetricDifference = left.symetricDifference(from: right) { $0.uuid }
+            expect(symetricDifference.compactMap { $0.uuid }).to(equal(expected.compactMap { $0.uuid }))
         }
         it("should generate symetric differrence equatables") {
             let left: [DummyEquatable] = .dummies(count: Int.random(in: 20..<50))
@@ -48,7 +48,7 @@ class LazySequenceExtensionsSpec: QuickSpec {
             let expected: [DummyObject] = leftSubstracted + rightSubstracted
             let right: [DummyObject] = Array(left[15..<left.count]) + rightSubstracted
             let symetricDifference = left.objectsSymetricDifference(from: right)
-            expect(symetricDifference.compactMap { $0.id }).to(equal(expected.compactMap { $0.id }))
+            expect(symetricDifference.compactMap { $0.uuid }).to(equal(expected.compactMap { $0.uuid }))
         }
     }
 }
