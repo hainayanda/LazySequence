@@ -142,7 +142,7 @@ You can filter out repeating elements in the sequence lazily. But Iterating it w
 
 - `uniqued(byProjection:)` will need projection closure to generate a `Hashable` projection for differentiating the elements. Iterating it will have a time complexity of *O(n)* on average
 - `uniqued(where:)` will need comparison closure that will be used for differentiating the elements. Iterating it will have a time complexity of *O(n^2)*
-- `uniqued` property is available on `Equatable` sequence. Iterating it will have a time complexity of *O(n*2)*
+- `uniqued` property is available on `Equatable` sequence. Iterating it will have a time complexity of *O(n^2)*
 - `uniqued` property is available on the `Hashable` sequence. Iterating it will have a time complexity of *O(n)* on average
 - `uniquedObjects` property is available on sequence with class type element. Iterating it will have a time complexity of *O(n)* on average
 
