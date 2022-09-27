@@ -42,7 +42,7 @@ final public class DoublyLinkedList<Element> {
         $populated = queue
     }
     
-    public convenience init<S>(_ sequence: S) where S : Sequence, Element == S.Element {
+    public convenience init<S>(_ sequence: S) where S: Sequence, Element == S.Element {
         self.init()
         append(contentsOf: sequence)
     }

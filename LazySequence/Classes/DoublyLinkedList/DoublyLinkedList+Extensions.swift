@@ -47,7 +47,9 @@ extension DoublyLinkedList: Collection {
         }
     }
     
-    @inlinable public func index(after index: Int) -> Int { index + 1 }
+    @inlinable public func index(after index: Int) -> Int {
+        index + 1
+    }
     
     @inlinable public var startIndex: Int { 0 }
     

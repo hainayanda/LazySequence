@@ -4,6 +4,7 @@
 //
 //  Created by Nayanda Haberty on 23/9/22.
 //
+// swiftlint:disable file_length
 
 import Foundation
 

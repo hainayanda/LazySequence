@@ -42,7 +42,7 @@ public extension LazySequence {
         where consideredSame: @escaping (Element, Element) -> Bool) -> LazySequence<Element>
     where S.Element == Element {
         LazySequence(
-            iterator: IntersectionManualComparisonSequenceIterator(
+            iterator: ComparisonIntersectionSequenceIterator(
                 sequence: self,
                 intersectedBy: otherSequence,
                 consideredSame: consideredSame
@@ -129,7 +129,7 @@ where IntersectSequence.Element == BaseSequence.Element {
 
 // MARK: IntersectionEquatableSequenceIterator
 
-public final class IntersectionManualComparisonSequenceIterator<BaseSequence: Sequence, IntersectSequence: Sequence>:
+public final class ComparisonIntersectionSequenceIterator<BaseSequence: Sequence, IntersectSequence: Sequence>:
     IntersectionSequenceIterator<BaseSequence, IntersectSequence>
 where IntersectSequence.Element == BaseSequence.Element {
     public typealias Comparison = (Element, Element) -> Bool

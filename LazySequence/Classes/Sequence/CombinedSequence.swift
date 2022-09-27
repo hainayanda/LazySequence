@@ -36,7 +36,8 @@ public extension LazySequence {
 
 // MARK: CombinedSequenceIterator
 
-public final class CombinedSequenceIterator<BaseSequence: Sequence, AddedSequence: Sequence>: LazySequenceIterator<BaseSequence.Element>
+public final class CombinedSequenceIterator<BaseSequence: Sequence, AddedSequence: Sequence>:
+    LazySequenceIterator<BaseSequence.Element>
 where AddedSequence.Element == BaseSequence.Element {
     var firstIterator: BaseSequence.Iterator
     var secondIterator: AddedSequence.Iterator
