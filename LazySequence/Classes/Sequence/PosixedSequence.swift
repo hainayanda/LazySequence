@@ -67,7 +67,8 @@ public extension LazySequence where Element: AnyObject {
 
 // MARK: PosixedSequenceIteratorWrapper
 
-public final class PosixedSequenceIteratorWrapper<BaseSequence: Sequence>: LazySequenceIterator<BaseSequence.Element> {
+public final class PosixedSequenceIteratorWrapper<BaseSequence: Sequence>:
+    LazySequenceIterator<BaseSequence.Element> {
     typealias BaseIterator = BaseSequence.Iterator
     
     let startCondition: (Int, BaseSequence.Element) -> Bool

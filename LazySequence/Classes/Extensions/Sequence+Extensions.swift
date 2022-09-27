@@ -137,7 +137,9 @@ public extension Sequence {
     /// - Parameter otherSequence: A sequence to intersect with this sequence
     /// - Parameter consideredSame: A Closure that takes two elements as arguments and Bool as return value. If its return `True`, then the element will be considered the same, otherwise its not.
     /// - Returns: Array of element intersecting with this sequence and given sequence
-    @inlinable func intersection<S: Sequence>(with otherSequence: S, where consideredSame: @escaping (Element, Element) -> Bool) -> [Element]
+    @inlinable func intersection<S: Sequence>(
+        with otherSequence: S,
+        where consideredSame: @escaping (Element, Element) -> Bool) -> [Element]
     where S.Element == Element {
         lazy.intersectioned(with: otherSequence, where: consideredSame).asArray
     }
@@ -188,7 +190,9 @@ public extension Sequence {
     /// - Parameter otherSequence: A sequence to substract this sequence
     /// - Parameter consideredSame: A Closure that takes two elements as arguments and Bool as return value. If its return `True`, then the element will be considered the same, otherwise its not.
     /// - Returns: Array of element from this sequence substracted by given sequence
-    @inlinable func substract<S: Sequence>(by otherSequence: S, where consideredSame: @escaping (Element, Element) -> Bool) -> [Element]
+    @inlinable func substract<S: Sequence>(
+        by otherSequence: S,
+        where consideredSame: @escaping (Element, Element) -> Bool) -> [Element]
     where S.Element == Element {
         lazy.substracted(by: otherSequence, where: consideredSame).asArray
     }

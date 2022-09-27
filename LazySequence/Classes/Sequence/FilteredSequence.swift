@@ -43,7 +43,8 @@ public extension LazySequence where Element: Equatable {
 
 // MARK: FilteredSequenceIterator
 
-public final class FilteredSequenceIterator<BaseSequence: Sequence>: LazySequenceIterator<BaseSequence.Element> {
+public final class FilteredSequenceIterator<BaseSequence: Sequence>:
+    LazySequenceIterator<BaseSequence.Element> {
     public typealias Filter = (Element) -> Bool
     typealias BaseIterator = BaseSequence.Iterator
     
