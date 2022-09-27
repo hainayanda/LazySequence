@@ -1,4 +1,4 @@
-# Chary
+# LazySequence
 
 LazySequence is a sequence helper to minimize time complexity for most of the sequence operations.
 

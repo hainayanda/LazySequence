@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Chary",
+        "repositoryURL": "https://github.com/hainayanda/Chary.git",
+        "state": {
+          "branch": null,
+          "revision": "87cd06991689148a6d78370eb6853179ec2e882e",
+          "version": "1.0.3"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
