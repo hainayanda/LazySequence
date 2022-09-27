@@ -13,7 +13,7 @@ public extension LazySequence {
     
     /// Capped the sequence iteration to a given maximum iteration count
     /// This will create a new LazySequence that will only iterate the original sequence maximum at a given maximum iteration count
-    /// - Complexity: O(1) on creation, when iterating O (*n*) at if iteration count is less than given maximum iteration and O (*m*) if iteration count is more than given start iteration index, where *n* is the original sequence iterator iteration count, and *m* is given start iteration index
+    /// - Complexity: Executing this code will have complexity of O(1). Iterating it will have complexity O (*n*), where *n* is the original sequence iterator iteration count
     /// - Parameter maxIteration: Number of maximum iteration that will be performed by returned sequence
     /// - Returns: LazySequence that will only do iterating until given maximum iteration count or until iteration is finished
     @inlinable func droppedFirst(_ count: Int) -> LazySequence<Element> {
@@ -24,7 +24,7 @@ public extension LazySequence {
     
     /// Drop a sequence elements until the given condition for the element is met
     /// This will create a new LazySequence that will only iterate the original sequence after the given condition for the element is met
-    /// - Complexity: O (*n*) at maximum and O (*m*) at minimum, where *n* is the original sequence iterator iteration count, and *m* is iteration count after condition is met
+    /// - Complexity: Executing this code will have complexity of O(1). Iterating it will have complexity O (*n*), where *n* is the original sequence iterator iteration count
     /// - Parameter found: Closure that accept element for each iteration and return Bool that indicate the iteration must stop
     /// - Returns: LazySequence that will only iterate the original sequence after the given condition for the element is met
     @inlinable func droppedUntil(found: @escaping (Element) -> Bool) -> LazySequence<Element> {
@@ -35,7 +35,7 @@ public extension LazySequence {
     
     /// Capped the sequence iteration until certain condition is met
     /// This will create a new LazySequence that will only iterate the original sequence until certain condition is met or until iteration is finished
-    /// - Complexity: O (*n*) at maximum and O (*m*) at minimum, where *n* is the original sequence iterator iteration count, and *m* is iteration count after condition is met
+    /// - Complexity: Executing this code will have complexity of O(1). Iterating it will have complexity O (*n*), where *n* is the original sequence iterator iteration count
     /// - Parameter coditionMet: Closure that accept index and element for each iteration and return Bool that indicate the iteration must stop
     /// - Returns: LazySequence that will only do iterating until certain condition is met or until iteration is finished
     @inlinable func droppedUntilEnumerated(found: @escaping (Int, Element) -> Bool) -> LazySequence<Element> {
@@ -46,7 +46,7 @@ public extension LazySequence {
 public extension LazySequence where Element: Equatable {
     /// Drop a sequence elements until the given element is found
     /// This will create a new LazySequence that will only iterate the original sequence after the given element is found
-    /// - Complexity: O (*n*) at maximum and O (*m*) at minimum, where *n* is the original sequence iterator iteration count, and *m* is iteration count after condition is met
+    /// - Complexity: Executing this code will have complexity of O(1). Iterating it will have complexity O (*n*), where *n* is the original sequence iterator iteration count
     /// - Parameter element: Element to be found
     /// - Returns: LazySequence that will only iterate the original sequence after the given element is found
     @inlinable func droppedUntil(found element: Element) -> LazySequence<Element> {
@@ -57,7 +57,7 @@ public extension LazySequence where Element: Equatable {
 public extension LazySequence where Element: AnyObject {
     /// Drop a sequence elements until the given object is found
     /// This will create a new LazySequence that will only iterate the original sequence after the given object is found
-    /// - Complexity: O (*n*) at maximum and O (*m*) at minimum, where *n* is the original sequence iterator iteration count, and *m* is iteration count after condition is met
+    /// - Complexity: Executing this code will have complexity of O(1). Iterating it will have complexity O (*n*), where *n* is the original sequence iterator iteration count
     /// - Parameter object: Object to be found
     /// - Returns: LazySequence that will only iterate the original sequence after the given object is found
     @inlinable func droppedUntil(objectFound object: Element) -> LazySequence<Element> {

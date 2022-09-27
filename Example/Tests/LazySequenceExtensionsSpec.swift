@@ -14,41 +14,41 @@ import LazySequence
 class LazySequenceExtensionsSpec: QuickSpec {
     
     override func spec() {
-        it("should generate symetric differrence based on projection") {
+        it("should generate symmetric differrence based on projection") {
             let left: [Dummy] = .dummies(count: Int.random(in: 20..<50))
-            let leftSubstracted = Array(left[0..<15])
-            let rightSubstracted: [Dummy] = .dummies(count: Int.random(in: 10 ..< 20))
-            let expected: [Dummy] = leftSubstracted + rightSubstracted
-            let right: [Dummy] = Array(left[15..<left.count]) + rightSubstracted
-            let symetricDifference = left.symetricDifference(from: right) { $0.uuid }
-            expect(symetricDifference.compactMap { $0.uuid }).to(equal(expected.compactMap { $0.uuid }))
+            let leftSubtracted = Array(left[0..<15])
+            let rightSubtracted: [Dummy] = .dummies(count: Int.random(in: 10 ..< 20))
+            let expected: [Dummy] = leftSubtracted + rightSubtracted
+            let right: [Dummy] = Array(left[15..<left.count]) + rightSubtracted
+            let symmetricDifference = left.symmetricDifference(from: right) { $0.uuid }
+            expect(symmetricDifference.compactMap { $0.uuid }).to(equal(expected.compactMap { $0.uuid }))
         }
-        it("should generate symetric differrence equatables") {
+        it("should generate symmetric differrence equatables") {
             let left: [DummyEquatable] = .dummies(count: Int.random(in: 20..<50))
-            let leftSubstracted = Array(left[0..<15])
-            let rightSubstracted: [DummyEquatable] = .dummies(count: Int.random(in: 10 ..< 20))
-            let expected: [DummyEquatable] = leftSubstracted + rightSubstracted
-            let right: [DummyEquatable] = Array(left[15..<left.count]) + rightSubstracted
-            let symetricDifference = left.symetricDifference(from: right)
-            expect(symetricDifference).to(equal(expected))
+            let leftSubtracted = Array(left[0..<15])
+            let rightSubtracted: [DummyEquatable] = .dummies(count: Int.random(in: 10 ..< 20))
+            let expected: [DummyEquatable] = leftSubtracted + rightSubtracted
+            let right: [DummyEquatable] = Array(left[15..<left.count]) + rightSubtracted
+            let symmetricDifference = left.symmetricDifference(from: right)
+            expect(symmetricDifference).to(equal(expected))
         }
-        it("should generate symetric differrence hashables") {
+        it("should generate symmetric differrence hashables") {
             let left: [DummyHashable] = .dummies(count: Int.random(in: 20..<50))
-            let leftSubstracted = Array(left[0..<15])
-            let rightSubstracted: [DummyHashable] = .dummies(count: Int.random(in: 10 ..< 20))
-            let expected: [DummyHashable] = leftSubstracted + rightSubstracted
-            let right: [DummyHashable] = Array(left[15..<left.count]) + rightSubstracted
-            let symetricDifference = left.symetricDifference(from: right)
-            expect(symetricDifference).to(equal(expected))
+            let leftSubtracted = Array(left[0..<15])
+            let rightSubtracted: [DummyHashable] = .dummies(count: Int.random(in: 10 ..< 20))
+            let expected: [DummyHashable] = leftSubtracted + rightSubtracted
+            let right: [DummyHashable] = Array(left[15..<left.count]) + rightSubtracted
+            let symmetricDifference = left.symmetricDifference(from: right)
+            expect(symmetricDifference).to(equal(expected))
         }
-        it("should generate symetric differrence objects") {
+        it("should generate symmetric differrence objects") {
             let left: [DummyObject] = .dummies(count: Int.random(in: 20..<50))
-            let leftSubstracted = Array(left[0..<15])
-            let rightSubstracted: [DummyObject] = .dummies(count: Int.random(in: 10 ..< 20))
-            let expected: [DummyObject] = leftSubstracted + rightSubstracted
-            let right: [DummyObject] = Array(left[15..<left.count]) + rightSubstracted
-            let symetricDifference = left.objectsSymetricDifference(from: right)
-            expect(symetricDifference.compactMap { $0.uuid }).to(equal(expected.compactMap { $0.uuid }))
+            let leftSubtracted = Array(left[0..<15])
+            let rightSubtracted: [DummyObject] = .dummies(count: Int.random(in: 10 ..< 20))
+            let expected: [DummyObject] = leftSubtracted + rightSubtracted
+            let right: [DummyObject] = Array(left[15..<left.count]) + rightSubtracted
+            let symmetricDifference = left.objectsSymmetricDifference(from: right)
+            expect(symmetricDifference.compactMap { $0.uuid }).to(equal(expected.compactMap { $0.uuid }))
         }
     }
 }

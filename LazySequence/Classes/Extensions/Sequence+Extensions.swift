@@ -63,32 +63,32 @@ public extension Sequence {
         lazy.uniqued(where: consideredSame).asArray
     }
     
-    // MARK: Symetric Difference
+    // MARK: Symmetric Difference
     
-    /// Simply just shortcut to `lazy.symetricDifferenced(from: otherSequence, projection).asArray`
+    /// Simply just shortcut to `lazy.symmetricDifferenced(from: otherSequence, projection).asArray`
     /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
-    /// If you just need to iterate the element uniquely, consider using `symetricDifferenced` instead
+    /// If you just need to iterate the element uniquely, consider using `symmetricDifferenced` instead
     /// ```
     /// // this will have time complexity O(2k + 2l + m) where k is myArray length, l is otherArray length and m is intersection array length
-    /// myArray.symetricDifferenced(by: otherArray) { projecting($0) }.forEach {
+    /// myArray.symmetricDifferenced(by: otherArray) { projecting($0) }.forEach {
     ///     print($0)
     /// }
     ///
     /// // this will have time complexity O(2k + 2l) since the intersection check will be executed while iterating forEach
-    /// myArray.lazy.symetricDifferenced(by: otherArray) { projecting($0) }.forEach {
+    /// myArray.lazy.symmetricDifferenced(by: otherArray) { projecting($0) }.forEach {
     ///     print($0)
     /// }
     /// ```
-    /// - Complexity: O( 2 (*n* + *m*) ) on average where *n* is the original sequence iterator iteration count, and *m* is the substracting sequence iterator iteration count
+    /// - Complexity: O( 2 (*n* + *m*) ) on average where *n* is the original sequence iterator iteration count, and *m* is the subtracting sequence iterator iteration count
     /// - Parameters:
-    ///   - otherSequence: A sequence to have a symetric difference with this sequence
+    ///   - otherSequence: A sequence to have a symmetric difference with this sequence
     ///   - projection: A closure that accepts an element of this sequence as its argument and returns an hashable value.
-    /// - Returns: Array of symetric difference element from this sequence and the given sequence
-    @inlinable func symetricDifference<S: Sequence, Projection: Hashable>(
+    /// - Returns: Array of symmetric difference element from this sequence and the given sequence
+    @inlinable func symmetricDifference<S: Sequence, Projection: Hashable>(
         from otherSequence: S,
         _ projection: @escaping (Element) -> Projection) -> [Element]
     where S.Element == Element {
-        lazy.symetricDifferenced(from: otherSequence, projection).asArray
+        lazy.symmetricDifferenced(from: otherSequence, projection).asArray
     }
     
     // MARK: Intersection
@@ -146,55 +146,55 @@ public extension Sequence {
     
     // MARK: Substract
     
-    /// Simply just shortcut to `lazy.substracted(by: otherSequence, projection).asArray`
+    /// Simply just shortcut to `lazy.subtracted(by: otherSequence, projection).asArray`
     /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
-    /// If you just need to iterate the element uniquely, consider using `substracted` instead
+    /// If you just need to iterate the element uniquely, consider using `subtracted` instead
     /// ```
     /// // this will have time complexity O(k + l + m) where k is myArray length, l is otherArray length and m is intersection array length
-    /// myArray.lazy.substractToArray(by: otherArray) { projecting($0) }.forEach {
+    /// myArray.lazy.subtractToArray(by: otherArray) { projecting($0) }.forEach {
     ///     print($0)
     /// }
     ///
     /// // this will have time complexity O(k + l) since the intersection check will be executed while iterating forEach
-    /// myArray.lazy.substracted(by: otherArray) { projecting($0) }.forEach {
+    /// myArray.lazy.subtracted(by: otherArray) { projecting($0) }.forEach {
     ///     print($0)
     /// }
     /// ```
-    /// - Complexity: O(*n* + *m*) on average, where *n* is the original sequence iterator iteration count, and *m* is the substracting sequence iterator iteration count
+    /// - Complexity: O(*n* + *m*) on average, where *n* is the original sequence iterator iteration count, and *m* is the subtracting sequence iterator iteration count
     /// - Parameters:
-    ///   - otherSequence: A sequence to substract this sequence
+    ///   - otherSequence: A sequence to subtract this sequence
     ///   - projection: A closure that accepts an element of this sequence as its argument and returns an hashable value.
-    /// - Returns: Array of element from this sequence substracted by given sequence
-    @inlinable func substract<S: Sequence, Projection: Hashable>(
+    /// - Returns: Array of element from this sequence subtracted by given sequence
+    @inlinable func subtract<S: Sequence, Projection: Hashable>(
         by otherSequence: S,
         usingProjection projection: @escaping (Element) -> Projection) -> [Element]
     where S.Element == Element {
-        lazy.substracted(by: otherSequence, usingProjection: projection).asArray
+        lazy.subtracted(by: otherSequence, usingProjection: projection).asArray
     }
     
-    /// Simply just shortcut to `lazy.substracted(by: otherSequence).asArray`
+    /// Simply just shortcut to `lazy.subtracted(by: otherSequence).asArray`
     /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
-    /// If you just need to iterate the element uniquely, consider using `substracted` instead
+    /// If you just need to iterate the element uniquely, consider using `subtracted` instead
     /// ```
     /// // this will have time complexity O(k + l + m) where k is myArray length, l is otherArray length and m is intersection array length
-    /// myArray.lazy.substractToArray(by: otherArray).forEach {
+    /// myArray.lazy.subtractToArray(by: otherArray).forEach {
     ///     print($0)
     /// }
     ///
     /// // this will have time complexity O(k + l) since the intersection check will be executed while iterating forEach
-    /// myArray.lazy.substracted(by: otherArray).forEach {
+    /// myArray.lazy.subtracted(by: otherArray).forEach {
     ///     print($0)
     /// }
     /// ```
-    /// - Complexity: O(*n* *m*) on average, where *n* is the original sequence iterator iteration count, and *m* is the substracting sequence iterator iteration count
-    /// - Parameter otherSequence: A sequence to substract this sequence
+    /// - Complexity: O(*n* *m*) on average, where *n* is the original sequence iterator iteration count, and *m* is the subtracting sequence iterator iteration count
+    /// - Parameter otherSequence: A sequence to subtract this sequence
     /// - Parameter consideredSame: A Closure that takes two elements as arguments and Bool as return value. If its return `True`, then the element will be considered the same, otherwise its not.
-    /// - Returns: Array of element from this sequence substracted by given sequence
-    @inlinable func substract<S: Sequence>(
+    /// - Returns: Array of element from this sequence subtracted by given sequence
+    @inlinable func subtract<S: Sequence>(
         by otherSequence: S,
         where consideredSame: @escaping (Element, Element) -> Bool) -> [Element]
     where S.Element == Element {
-        lazy.substracted(by: otherSequence, where: consideredSame).asArray
+        lazy.subtracted(by: otherSequence, where: consideredSame).asArray
     }
 }
 
@@ -224,28 +224,28 @@ public extension Sequence where Element: Equatable {
         lazy.uniqued.asArray
     }
     
-    // MARK: Symetric Difference
+    // MARK: Symmetric Difference
     
-    /// Simply just shortcut to `lazy.symetricDifferenced(from: otherSequence).asArray`
+    /// Simply just shortcut to `lazy.symmetricDifferenced(from: otherSequence).asArray`
     /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
-    /// If you just need to iterate the element uniquely, consider using `symetricDifferenced` instead
+    /// If you just need to iterate the element uniquely, consider using `symmetricDifferenced` instead
     /// ```
     /// // this will have time complexity O((2 * k * l) + m) where k is myArray length, l is otherArray length and m is intersection array length
-    /// myArray.symetricDifferenced(by: otherArray).forEach {
+    /// myArray.symmetricDifferenced(by: otherArray).forEach {
     ///     print($0)
     /// }
     ///
     /// // this will have time complexity O(2 * k * l) since the intersection check will be executed while iterating forEach
-    /// myArray.lazy.symetricDifferenced(by: otherArray).forEach {
+    /// myArray.lazy.symmetricDifferenced(by: otherArray).forEach {
     ///     print($0)
     /// }
     /// ```
-    /// - Complexity: O( 2 *n* *m* ) on average where *n* is the original sequence iterator iteration count, and *m* is the substracting sequence iterator iteration count
-    /// - Parameter otherSequence: A sequence to have a symetric difference with this sequence
-    /// - Returns: Array of symetric difference element from this sequence and the given sequence
-    @inlinable func symetricDifference<S: Sequence>(from otherSequence: S) -> [Element]
+    /// - Complexity: O( 2 *n* *m* ) on average where *n* is the original sequence iterator iteration count, and *m* is the subtracting sequence iterator iteration count
+    /// - Parameter otherSequence: A sequence to have a symmetric difference with this sequence
+    /// - Returns: Array of symmetric difference element from this sequence and the given sequence
+    @inlinable func symmetricDifference<S: Sequence>(from otherSequence: S) -> [Element]
     where S.Element == Element {
-        lazy.symetricDifferenced(from: otherSequence).asArray
+        lazy.symmetricDifferenced(from: otherSequence).asArray
     }
     
     // MARK: Intersection
@@ -274,26 +274,26 @@ public extension Sequence where Element: Equatable {
     
     // MARK: Substract
     
-    /// Simply just shortcut to `lazy.substracted(by: otherSequence).asArray`
+    /// Simply just shortcut to `lazy.subtracted(by: otherSequence).asArray`
     /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
-    /// If you just need to iterate the element uniquely, consider using `substracted` instead
+    /// If you just need to iterate the element uniquely, consider using `subtracted` instead
     /// ```
     /// // this will have time complexity O(k + l + m) where k is myArray length, l is otherArray length and m is intersection array length
-    /// myArray.lazy.substractToArray(by: otherArray).forEach {
+    /// myArray.lazy.subtractToArray(by: otherArray).forEach {
     ///     print($0)
     /// }
     ///
     /// // this will have time complexity O(k + l) since the intersection check will be executed while iterating forEach
-    /// myArray.lazy.substracted(by: otherArray).forEach {
+    /// myArray.lazy.subtracted(by: otherArray).forEach {
     ///     print($0)
     /// }
     /// ```
-    /// - Complexity: O(*n* *m*) on average, where *n* is the original sequence iterator iteration count, and *m* is the substracting sequence iterator iteration count
-    /// - Parameter otherSequence: A sequence to substract this sequence
-    /// - Returns: Array of element from this sequence substracted by given sequence
-    @inlinable func substract<S: Sequence>(by otherSequence: S) -> [Element]
+    /// - Complexity: O(*n* *m*) on average, where *n* is the original sequence iterator iteration count, and *m* is the subtracting sequence iterator iteration count
+    /// - Parameter otherSequence: A sequence to subtract this sequence
+    /// - Returns: Array of element from this sequence subtracted by given sequence
+    @inlinable func subtract<S: Sequence>(by otherSequence: S) -> [Element]
     where S.Element == Element {
-        lazy.substracted(by: otherSequence, where: ==).asArray
+        lazy.subtracted(by: otherSequence, where: ==).asArray
     }
 }
 
@@ -323,28 +323,28 @@ public extension Sequence where Element: Hashable {
         lazy.uniqued.asArray
     }
     
-    // MARK: Symetric Difference
+    // MARK: Symmetric Difference
     
-    /// Simply just shortcut to `lazy.symetricDifferenced(from: otherSequence).asArray`
+    /// Simply just shortcut to `lazy.symmetricDifferenced(from: otherSequence).asArray`
     /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
-    /// If you just need to iterate the element uniquely, consider using `symetricDifferenced` instead
+    /// If you just need to iterate the element uniquely, consider using `symmetricDifferenced` instead
     /// ```
     /// // this will have time complexity O(2k + 2l + m) where k is myArray length, l is otherArray length and m is intersection array length
-    /// myArray.symetricDifference(by: otherArray).forEach {
+    /// myArray.symmetricDifference(by: otherArray).forEach {
     ///     print($0)
     /// }
     ///
     /// // this will have time complexity O(2k + 2l) since the intersection check will be executed while iterating forEach
-    /// myArray.lazy.symetricDifferenced(by: otherArray).forEach {
+    /// myArray.lazy.symmetricDifferenced(by: otherArray).forEach {
     ///     print($0)
     /// }
     /// ```
-    /// - Complexity: O( 2 (*n* + *m*) ) on average where *n* is the original sequence iterator iteration count, and *m* is the substracting sequence iterator iteration count
-    /// - Parameter otherSequence: A sequence to have a symetric difference with this sequence
-    /// - Returns: Array of symetric difference element from this sequence and the given sequence
-    @inlinable func symetricDifference<S: Sequence>(from otherSequence: S) -> [Element]
+    /// - Complexity: O( 2 (*n* + *m*) ) on average where *n* is the original sequence iterator iteration count, and *m* is the subtracting sequence iterator iteration count
+    /// - Parameter otherSequence: A sequence to have a symmetric difference with this sequence
+    /// - Returns: Array of symmetric difference element from this sequence and the given sequence
+    @inlinable func symmetricDifference<S: Sequence>(from otherSequence: S) -> [Element]
     where S.Element == Element {
-        lazy.symetricDifferenced(from: otherSequence).asArray
+        lazy.symmetricDifferenced(from: otherSequence).asArray
     }
     
     // MARK: Intersection
@@ -373,26 +373,26 @@ public extension Sequence where Element: Hashable {
     
     // MARK: Substract
     
-    /// Simply just shortcut to `lazy.substracted(by: otherSequence).asArray`
+    /// Simply just shortcut to `lazy.subtracted(by: otherSequence).asArray`
     /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
-    /// If you just need to iterate the element uniquely, consider using `substracted` instead
+    /// If you just need to iterate the element uniquely, consider using `subtracted` instead
     /// ```
     /// // this will have time complexity O(k + l + m) where k is myArray length, l is otherArray length and m is intersection array length
-    /// myArray.lazy.substractToArray(by: otherArray).forEach {
+    /// myArray.lazy.subtractToArray(by: otherArray).forEach {
     ///     print($0)
     /// }
     ///
     /// // this will have time complexity O(k + l) since the intersection check will be executed while iterating forEach
-    /// myArray.lazy.substracted(by: otherArray).forEach {
+    /// myArray.lazy.subtracted(by: otherArray).forEach {
     ///     print($0)
     /// }
     /// ```
-    /// - Complexity: O(*n* + *m*) on average, where *n* is the original sequence iterator iteration count, and *m* is the substracting sequence iterator iteration count
-    /// - Parameter otherSequence: A sequence to substract this sequence
-    /// - Returns: Array of element from this sequence substracted by given sequence
-    @inlinable func substract<S: Sequence>(by otherSequence: S) -> [Element]
+    /// - Complexity: O(*n* + *m*) on average, where *n* is the original sequence iterator iteration count, and *m* is the subtracting sequence iterator iteration count
+    /// - Parameter otherSequence: A sequence to subtract this sequence
+    /// - Returns: Array of element from this sequence subtracted by given sequence
+    @inlinable func subtract<S: Sequence>(by otherSequence: S) -> [Element]
     where S.Element == Element {
-        lazy.substracted(by: otherSequence).asArray
+        lazy.subtracted(by: otherSequence).asArray
     }
 }
 
@@ -422,28 +422,28 @@ public extension Sequence where Element: AnyObject {
         lazy.uniquedObjects.asArray
     }
     
-    // MARK: Symetric Difference
+    // MARK: Symmetric Difference
     
-    /// Simply just shortcut to `lazy.objectsSymetricDifferenced(from: otherSequence).asArray`
+    /// Simply just shortcut to `lazy.objectsSymmetricDifferenced(from: otherSequence).asArray`
     /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
-    /// If you just need to iterate the element uniquely, consider using `objectsSymetricDifferenced` instead
+    /// If you just need to iterate the element uniquely, consider using `objectsSymmetricDifferenced` instead
     /// ```
     /// // this will have time complexity O(2k + 2l + m) where k is myArray length, l is otherArray length and m is intersection array length
-    /// myArray.objectsSymetricDifferenceArray(by: otherArray).forEach {
+    /// myArray.objectsSymmetricDifferenceArray(by: otherArray).forEach {
     ///     print($0)
     /// }
     ///
     /// // this will have time complexity O(2k + 2l) since the intersection check will be executed while iterating forEach
-    /// myArray.lazy.objectsSymetricDifferenced(by: otherArray).forEach {
+    /// myArray.lazy.objectsSymmetricDifferenced(by: otherArray).forEach {
     ///     print($0)
     /// }
     /// ```
-    /// - Complexity: O( 2 (*n* + *m*) ) on average where *n* is the original sequence iterator iteration count, and *m* is the substracting sequence iterator iteration count
-    /// - Parameter otherSequence: A sequence to have an object symetric difference with this sequence
-    /// - Returns: Array of object symetric difference element from this sequence and the given sequence
-    @inlinable func objectsSymetricDifference<S: Sequence>(from otherSequence: S) -> [Element]
+    /// - Complexity: O( 2 (*n* + *m*) ) on average where *n* is the original sequence iterator iteration count, and *m* is the subtracting sequence iterator iteration count
+    /// - Parameter otherSequence: A sequence to have an object symmetric difference with this sequence
+    /// - Returns: Array of object symmetric difference element from this sequence and the given sequence
+    @inlinable func objectsSymmetricDifference<S: Sequence>(from otherSequence: S) -> [Element]
     where S.Element == Element {
-        lazy.objectsSymetricDifferenced(from: otherSequence).asArray
+        lazy.objectsSymmetricDifferenced(from: otherSequence).asArray
     }
     
     // MARK: Intersection
@@ -472,9 +472,9 @@ public extension Sequence where Element: AnyObject {
     
     // MARK: Substract
     
-    /// Simply just shortcut to `lazy.objectsSubstracted(by: otherSequence).asArray`
+    /// Simply just shortcut to `lazy.objectsSubtracted(by: otherSequence).asArray`
     /// Keep in mind this will automatically run the iterator iteration when creating an new Array.
-    /// If you just need to iterate the element uniquely, consider using `substracted` instead
+    /// If you just need to iterate the element uniquely, consider using `subtracted` instead
     /// ```
     /// // this will have time complexity O(k + l + m) where k is myArray length, l is otherArray length and m is intersection array length
     /// myArray.lazy.objectsSubstractedToArray(by: otherArray).forEach {
@@ -482,15 +482,15 @@ public extension Sequence where Element: AnyObject {
     /// }
     ///
     /// // this will have time complexity O(k + l) since the intersection check will be executed while iterating forEach
-    /// myArray.lazy.objectsSubstracted(by: otherArray).forEach {
+    /// myArray.lazy.objectsSubtracted(by: otherArray).forEach {
     ///     print($0)
     /// }
     /// ```
-    /// - Complexity: O(*n* + *m*) on average, where *n* is the original sequence iterator iteration count, and *m* is the substracting sequence iterator iteration count
-    /// - Parameter otherSequence: A sequence to substract this sequence
-    /// - Returns: Array of object from this sequence substracted by given sequence
+    /// - Complexity: O(*n* + *m*) on average, where *n* is the original sequence iterator iteration count, and *m* is the subtracting sequence iterator iteration count
+    /// - Parameter otherSequence: A sequence to subtract this sequence
+    /// - Returns: Array of object from this sequence subtracted by given sequence
     @inlinable func objectsSubstract<S: Sequence>(by otherSequence: S) -> [Element]
     where S.Element == Element {
-        lazy.objectsSubstracted(by: otherSequence).asArray
+        lazy.objectsSubtracted(by: otherSequence).asArray
     }
 }

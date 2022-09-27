@@ -8,8 +8,8 @@
 
 Pod::Spec.new do |s|
   s.name             = 'LazySequence'
-  s.version          = '0.1.0'
-  s.summary          = 'A short description of LazySequence.'
+  s.version          = '1.0.0'
+  s.summary          = 'LazySequence is a sequence helper to minimize time complexity for most of the sequence operations.'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -18,7 +18,8 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+  LazySequence is a sequence helper to minimize time complexity for most of the sequence operations.
+  What it did do is by creating a new sequence that will combine any other operation to be run later in linear time complexity if possible.
                        DESC
 
   s.homepage         = 'https://github.com/hainayanda/LazySequence'
@@ -28,7 +29,7 @@ TODO: Add long description of the pod here.
   s.source           = { :git => 'https://github.com/hainayanda/LazySequence.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '11.0'
+  s.ios.deployment_target = '10.0'
 
   s.source_files = 'LazySequence/Classes/**/*'
   
