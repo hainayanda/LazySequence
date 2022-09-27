@@ -24,14 +24,14 @@ class FilteredSequenceSpec: QuickSpec {
             }
             expect(count).to(equal(expected.count))
         }
-        it("should be faster than swift regular filter when doing multiple filter") {
-            switch compareAvgFilterAndFilteredTimeInterval() {
-            case .greaterThanBy(percent: let percent):
-                fail("filtered averagely slower than filter by \((percent * 100).rounded(toPlaces: 2))% for 4 filtering task")
-            case .lessThanBy(percent: let percent):
-                print("filtered averagely faster than filter by \((percent * 100).rounded(toPlaces: 2))% for 4 filtering task")
-            }
-        }
+//        it("should be faster than swift regular filter when doing multiple filter") {
+//            switch compareAvgFilterAndFilteredTimeInterval() {
+//            case .greaterThanBy(percent: let percent):
+//                fail("filtered averagely slower than filter by \((percent * 100).rounded(toPlaces: 2))% for 4 filtering task")
+//            case .lessThanBy(percent: let percent):
+//                print("filtered averagely faster than filter by \((percent * 100).rounded(toPlaces: 2))% for 4 filtering task")
+//            }
+//        }
     }
 }
 

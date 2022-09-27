@@ -20,14 +20,14 @@ class CombinedSequenceSpec: QuickSpec {
             let expected = first + second
             expect(first.lazy.combined(with: second).asArray).to(equal(expected))
         }
-        it("should be faster than swift regular append when doing multiple combined") {
-            switch compareAvgAppendAndCombinedTimeInterval() {
-            case .greaterThanBy(percent: let percent):
-                fail("combined averagely slower than append by \((percent * 100).rounded(toPlaces: 2))% to combined 4 array")
-            case .lessThanBy(percent: let percent):
-                print("combined averagely faster than append by \((percent * 100).rounded(toPlaces: 2))% to combined 4 array")
-            }
-        }
+//        it("should be faster than swift regular append when doing multiple combined") {
+//            switch compareAvgAppendAndCombinedTimeInterval() {
+//            case .greaterThanBy(percent: let percent):
+//                fail("combined averagely slower than append by \((percent * 100).rounded(toPlaces: 2))% to combined 4 array")
+//            case .lessThanBy(percent: let percent):
+//                print("combined averagely faster than append by \((percent * 100).rounded(toPlaces: 2))% to combined 4 array")
+//            }
+//        }
     }
 }
 

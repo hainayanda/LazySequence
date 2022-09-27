@@ -43,14 +43,14 @@ class PosixedSequenceSpec: QuickSpec {
             }
             expect(count).to(equal(0))
         }
-        it("should be faster than swift regular slice when doing multiple droppedFirst") {
-            switch comparePosixWithArraySlice() {
-            case .greaterThanBy(percent: let percent):
-                fail("slice averagely slower than droppedFirst by \((percent * 100).rounded(toPlaces: 2))% for dropping half of its sequence content gradually 3 times")
-            case .lessThanBy(percent: let percent):
-                print("droppedFirst averagely faster than slice by \((percent * 100).rounded(toPlaces: 2))% for dropping half of its sequence content gradually 3 times")
-            }
-        }
+//        it("should be faster than swift regular slice when doing multiple droppedFirst") {
+//            switch comparePosixWithArraySlice() {
+//            case .greaterThanBy(percent: let percent):
+//                fail("slice averagely slower than droppedFirst by \((percent * 100).rounded(toPlaces: 2))% for dropping half of its sequence content gradually 3 times")
+//            case .lessThanBy(percent: let percent):
+//                print("droppedFirst averagely faster than slice by \((percent * 100).rounded(toPlaces: 2))% for dropping half of its sequence content gradually 3 times")
+//            }
+//        }
     }
 }
 

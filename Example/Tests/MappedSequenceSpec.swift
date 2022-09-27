@@ -29,22 +29,22 @@ class MappedSequenceSpec: QuickSpec {
             }
             expect(count).to(equal(expected.count))
         }
-        it("should be faster than swift regular map when doing multiple mapped") {
-            switch compareAvgMapAndMappedTimeInterval() {
-            case .greaterThanBy(percent: let percent):
-                fail("mapped averagely slower than map by \((percent * 100).rounded(toPlaces: 2))% for mapping 4 times in a row")
-            case .lessThanBy(percent: let percent):
-                print("mapped averagely faster than map by \((percent * 100).rounded(toPlaces: 2))% for mapping 4 times in a row")
-            }
-        }
-        it("should be faster than swift compactMap append when doing multiple compactMapped") {
-            switch compareAvgCompactMapAndCompactMappedTimeInterval() {
-            case .greaterThanBy(percent: let percent):
-                fail("compactMapped averagely slower than compactMap by \((percent * 100).rounded(toPlaces: 2))% for mapping 4 times in a row")
-            case .lessThanBy(percent: let percent):
-                print("compactMapped averagely faster than compactMap by \((percent * 100).rounded(toPlaces: 2))% for mapping 4 times in a row")
-            }
-        }
+//        it("should be faster than swift regular map when doing multiple mapped") {
+//            switch compareAvgMapAndMappedTimeInterval() {
+//            case .greaterThanBy(percent: let percent):
+//                fail("mapped averagely slower than map by \((percent * 100).rounded(toPlaces: 2))% for mapping 4 times in a row")
+//            case .lessThanBy(percent: let percent):
+//                print("mapped averagely faster than map by \((percent * 100).rounded(toPlaces: 2))% for mapping 4 times in a row")
+//            }
+//        }
+//        it("should be faster than swift compactMap append when doing multiple compactMapped") {
+//            switch compareAvgCompactMapAndCompactMappedTimeInterval() {
+//            case .greaterThanBy(percent: let percent):
+//                fail("compactMapped averagely slower than compactMap by \((percent * 100).rounded(toPlaces: 2))% for mapping 4 times in a row")
+//            case .lessThanBy(percent: let percent):
+//                print("compactMapped averagely faster than compactMap by \((percent * 100).rounded(toPlaces: 2))% for mapping 4 times in a row")
+//            }
+//        }
     }
 }
 
